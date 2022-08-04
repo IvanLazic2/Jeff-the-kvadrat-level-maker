@@ -38,6 +38,14 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.Enemy1Panel = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.LargeSpikesPanel = new System.Windows.Forms.Panel();
+            this.WeirdSpikesPanel = new System.Windows.Forms.Panel();
+            this.MediumSpikesPanel = new System.Windows.Forms.Panel();
+            this.SmallSpikesPanel = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label4 = new System.Windows.Forms.Label();
@@ -61,7 +69,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(15, 99);
+            this.button1.Location = new System.Drawing.Point(15, 230);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -125,6 +133,14 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label8);
+            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.label5);
+            this.panel1.Controls.Add(this.LargeSpikesPanel);
+            this.panel1.Controls.Add(this.WeirdSpikesPanel);
+            this.panel1.Controls.Add(this.MediumSpikesPanel);
+            this.panel1.Controls.Add(this.SmallSpikesPanel);
             this.panel1.Controls.Add(this.Platform1Panel);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.label3);
@@ -136,6 +152,78 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(200, 256);
             this.panel1.TabIndex = 8;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(37, 188);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(67, 13);
+            this.label8.TabIndex = 14;
+            this.label8.Text = "Large spikes";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(37, 166);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(68, 13);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "Weird spikes";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(37, 144);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(77, 13);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Medium spikes";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(37, 122);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(65, 13);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Small spikes";
+            // 
+            // LargeSpikesPanel
+            // 
+            this.LargeSpikesPanel.BackColor = System.Drawing.Color.SaddleBrown;
+            this.LargeSpikesPanel.Location = new System.Drawing.Point(15, 185);
+            this.LargeSpikesPanel.Name = "LargeSpikesPanel";
+            this.LargeSpikesPanel.Size = new System.Drawing.Size(16, 16);
+            this.LargeSpikesPanel.TabIndex = 10;
+            this.LargeSpikesPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LargeSpikesPanel_MouseClick);
+            // 
+            // WeirdSpikesPanel
+            // 
+            this.WeirdSpikesPanel.BackColor = System.Drawing.Color.Chocolate;
+            this.WeirdSpikesPanel.Location = new System.Drawing.Point(15, 163);
+            this.WeirdSpikesPanel.Name = "WeirdSpikesPanel";
+            this.WeirdSpikesPanel.Size = new System.Drawing.Size(16, 16);
+            this.WeirdSpikesPanel.TabIndex = 9;
+            this.WeirdSpikesPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.WeirdSpikesPanel_MouseClick);
+            // 
+            // MediumSpikesPanel
+            // 
+            this.MediumSpikesPanel.BackColor = System.Drawing.Color.Orange;
+            this.MediumSpikesPanel.Location = new System.Drawing.Point(15, 141);
+            this.MediumSpikesPanel.Name = "MediumSpikesPanel";
+            this.MediumSpikesPanel.Size = new System.Drawing.Size(16, 16);
+            this.MediumSpikesPanel.TabIndex = 8;
+            this.MediumSpikesPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MediumSpikesPanel_MouseClick);
+            // 
+            // SmallSpikesPanel
+            // 
+            this.SmallSpikesPanel.BackColor = System.Drawing.Color.Yellow;
+            this.SmallSpikesPanel.Location = new System.Drawing.Point(15, 119);
+            this.SmallSpikesPanel.Name = "SmallSpikesPanel";
+            this.SmallSpikesPanel.Size = new System.Drawing.Size(16, 16);
+            this.SmallSpikesPanel.TabIndex = 7;
+            this.SmallSpikesPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SmallSpikesPanel_MouseClick);
             // 
             // button2
             // 
@@ -208,6 +296,14 @@ namespace Jeff_The_Kvadrat_Level_Maker
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox fileNameTextBox;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Panel LargeSpikesPanel;
+        private System.Windows.Forms.Panel WeirdSpikesPanel;
+        private System.Windows.Forms.Panel MediumSpikesPanel;
+        private System.Windows.Forms.Panel SmallSpikesPanel;
     }
 }
 
