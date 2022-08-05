@@ -50,6 +50,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label4 = new System.Windows.Forms.Label();
             this.fileNameTextBox = new System.Windows.Forms.TextBox();
+            this.SpikedAreaPanel = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -133,6 +135,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label9);
+            this.panel1.Controls.Add(this.SpikedAreaPanel);
             this.panel1.Controls.Add(this.label8);
             this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.label6);
@@ -156,7 +160,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(37, 188);
+            this.label8.Location = new System.Drawing.Point(37, 166);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(67, 13);
             this.label8.TabIndex = 14;
@@ -165,7 +169,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(37, 166);
+            this.label7.Location = new System.Drawing.Point(37, 144);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(68, 13);
             this.label7.TabIndex = 13;
@@ -174,7 +178,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(37, 144);
+            this.label6.Location = new System.Drawing.Point(37, 122);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(77, 13);
             this.label6.TabIndex = 12;
@@ -183,7 +187,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(37, 122);
+            this.label5.Location = new System.Drawing.Point(37, 100);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(65, 13);
             this.label5.TabIndex = 11;
@@ -192,7 +196,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // LargeSpikesPanel
             // 
             this.LargeSpikesPanel.BackColor = System.Drawing.Color.SaddleBrown;
-            this.LargeSpikesPanel.Location = new System.Drawing.Point(15, 185);
+            this.LargeSpikesPanel.Location = new System.Drawing.Point(15, 163);
             this.LargeSpikesPanel.Name = "LargeSpikesPanel";
             this.LargeSpikesPanel.Size = new System.Drawing.Size(16, 16);
             this.LargeSpikesPanel.TabIndex = 10;
@@ -201,7 +205,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // WeirdSpikesPanel
             // 
             this.WeirdSpikesPanel.BackColor = System.Drawing.Color.Chocolate;
-            this.WeirdSpikesPanel.Location = new System.Drawing.Point(15, 163);
+            this.WeirdSpikesPanel.Location = new System.Drawing.Point(15, 141);
             this.WeirdSpikesPanel.Name = "WeirdSpikesPanel";
             this.WeirdSpikesPanel.Size = new System.Drawing.Size(16, 16);
             this.WeirdSpikesPanel.TabIndex = 9;
@@ -210,7 +214,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // MediumSpikesPanel
             // 
             this.MediumSpikesPanel.BackColor = System.Drawing.Color.Orange;
-            this.MediumSpikesPanel.Location = new System.Drawing.Point(15, 141);
+            this.MediumSpikesPanel.Location = new System.Drawing.Point(15, 119);
             this.MediumSpikesPanel.Name = "MediumSpikesPanel";
             this.MediumSpikesPanel.Size = new System.Drawing.Size(16, 16);
             this.MediumSpikesPanel.TabIndex = 8;
@@ -219,7 +223,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // SmallSpikesPanel
             // 
             this.SmallSpikesPanel.BackColor = System.Drawing.Color.Yellow;
-            this.SmallSpikesPanel.Location = new System.Drawing.Point(15, 119);
+            this.SmallSpikesPanel.Location = new System.Drawing.Point(15, 97);
             this.SmallSpikesPanel.Name = "SmallSpikesPanel";
             this.SmallSpikesPanel.Size = new System.Drawing.Size(16, 16);
             this.SmallSpikesPanel.TabIndex = 7;
@@ -259,6 +263,24 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.fileNameTextBox.Name = "fileNameTextBox";
             this.fileNameTextBox.Size = new System.Drawing.Size(115, 20);
             this.fileNameTextBox.TabIndex = 12;
+            // 
+            // SpikedAreaPanel
+            // 
+            this.SpikedAreaPanel.BackColor = System.Drawing.Color.Tan;
+            this.SpikedAreaPanel.Location = new System.Drawing.Point(15, 185);
+            this.SpikedAreaPanel.Name = "SpikedAreaPanel";
+            this.SpikedAreaPanel.Size = new System.Drawing.Size(16, 16);
+            this.SpikedAreaPanel.TabIndex = 11;
+            this.SpikedAreaPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SpikedAreaPanel_MouseClick);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(37, 188);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(64, 13);
+            this.label9.TabIndex = 15;
+            this.label9.Text = "Spiked area";
             // 
             // Form1
             // 
@@ -304,6 +326,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
         private System.Windows.Forms.Panel WeirdSpikesPanel;
         private System.Windows.Forms.Panel MediumSpikesPanel;
         private System.Windows.Forms.Panel SmallSpikesPanel;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Panel SpikedAreaPanel;
     }
 }
 

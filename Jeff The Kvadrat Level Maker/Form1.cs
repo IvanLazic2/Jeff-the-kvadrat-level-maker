@@ -184,6 +184,12 @@ namespace Jeff_The_Kvadrat_Level_Maker
             pen = Pens.SaddleBrown;
         }
 
+        private void SpikedAreaPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            brush = Brushes.Tan;
+            pen = Pens.Tan;
+        }
+
         // done
         private void button2_MouseClick(object sender, MouseEventArgs e)
         {
@@ -195,12 +201,19 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
             bool platStart = false;
             int platSize = 0;
-            int xCoord = 0;
+            int platXCoord = 0;
+
+            bool spikedAreaStart = false;
+            int spikedAreaSize = 0;
+            int spikedAreaXCoord = 0;
 
             for (int j = 0; j < finishedImage.Height; j += 16)
             {
                 platStart = false;
                 platSize = 0;
+
+                spikedAreaStart = false;
+                spikedAreaSize = 0;
 
                 for (int i = 0; i < finishedImage.Width; i += 16)
                 {
@@ -210,11 +223,17 @@ namespace Jeff_The_Kvadrat_Level_Maker
                     {
                         if (platStart)
                             platStart = false;
+
+                        if (spikedAreaStart)
+                            spikedAreaStart = false;
                     }
                     else if (c.R == 0 && c.G == 0 && c.B == 0) //black
                     {
+                        if (spikedAreaStart)
+                            spikedAreaStart = false;
+
                         if (!platStart)
-                            xCoord = i;
+                            platXCoord = i;
 
                         platStart = true;
                     }
@@ -222,6 +241,9 @@ namespace Jeff_The_Kvadrat_Level_Maker
                     {
                         if (platStart)
                             platStart = false;
+
+                        if (spikedAreaStart)
+                            spikedAreaStart = false;
 
                         Character.X = i / 16;
                         Character.Y = j;
@@ -235,12 +257,18 @@ namespace Jeff_The_Kvadrat_Level_Maker
                         if (platStart)
                             platStart = false;
 
+                        if (spikedAreaStart)
+                            spikedAreaStart = false;
+
                         Obstacles.Add(new Obstacle(i / 16, j, ObstacleType.SmallSpikes));
                     }
                     else if (c.R == 255 && c.G == 165 && c.B == 0) //orange
                     {
                         if (platStart)
                             platStart = false;
+
+                        if (spikedAreaStart)
+                            spikedAreaStart = false;
 
                         Obstacles.Add(new Obstacle(i / 16, j, ObstacleType.MediumSpikes));
                     }
@@ -249,6 +277,9 @@ namespace Jeff_The_Kvadrat_Level_Maker
                         if (platStart)
                             platStart = false;
 
+                        if (spikedAreaStart)
+                            spikedAreaStart = false;
+
                         Obstacles.Add(new Obstacle(i / 16, j, ObstacleType.WeirdSpikes));
                     }
                     else if (c.R == 139 && c.G == 69 && c.B == 19) //saddle brown
@@ -256,18 +287,39 @@ namespace Jeff_The_Kvadrat_Level_Maker
                         if (platStart)
                             platStart = false;
 
+                        if (spikedAreaStart)
+                            spikedAreaStart = false;
+
                         Obstacles.Add(new Obstacle(i / 16, j, ObstacleType.LargeSpikes));
+                    }
+                    else if (c.R == 210 && c.G == 180 && c.B == 140) // tan
+                    {
+                        if (platStart)
+                            platStart = false;
+
+                        if (!spikedAreaStart)
+                            spikedAreaXCoord = i;
+
+                        spikedAreaStart = true;
                     }
 
                     if (platStart)
                         platSize++;
 
-                    if ((!platStart || i == finishedImage.Width - 16) && platSize != 0)
-                        Platform1s.Add(new Platform1(xCoord / 16, j, platSize));
+                    if (spikedAreaStart)
+                        spikedAreaSize++;
 
-                    
+                    if ((!platStart || i == finishedImage.Width - 16) && platSize != 0)
+                        Platform1s.Add(new Platform1(platXCoord / 16, j, platSize));
+
+                    if ((!spikedAreaStart || i == finishedImage.Width - 16) && spikedAreaSize != 0)
+                        Obstacles.Add(new Obstacle(spikedAreaXCoord / 16, j, ObstacleType.SpikedArea, spikedAreaSize));
+
                     if (!platStart)
                         platSize = 0;
+
+                    if (!spikedAreaStart)
+                        spikedAreaSize = 0;
                 }
             }
 
@@ -300,6 +352,14 @@ namespace Jeff_The_Kvadrat_Level_Maker
                         currentSection.Platforms1.Add(Platform1s[i]);
                 }
 
+                for (int i = 0; i < Obstacles.Count; i++)
+                {
+                    if ((Obstacles[i].X >= (k - 1) * sectionWidth && Obstacles[i].X < k * sectionWidth) ||
+                        (Obstacles[i].X < k * sectionWidth && Obstacles[i].X + Obstacles[i].Size > (k - 1) * sectionWidth))
+
+                        currentSection.Obstacles.Add(Obstacles[i]);
+                }
+
                 currentSection.LeftBorder = (k - 1) * sectionWidth;
                 currentSection.RightBorder = k * sectionWidth;
                 //currentSection.PlatformsNum = currentSection.Platforms1.Count;
@@ -307,11 +367,11 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 currentSection = new Section();
             }
 
-            foreach (var obstacle in Obstacles)
+            /*foreach (var obstacle in Obstacles)
             {
                 int index = obstacle.X / sectionWidth;
                 Sections[index].Obstacles.Add(obstacle);
-            }
+            }*/
 
             // borders
             for (int i = 0; i < Sections.Count; i++)
@@ -353,7 +413,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
                     foreach (var obstacle in Sections[i - 1].Obstacles)
                     {
-                        if (obstacle.X == Sections[i - 1].RightBorder || obstacle.X == Sections[i - 1].RightBorder - 1)
+                        if (obstacle.X + obstacle.Size == Sections[i - 1].RightBorder || obstacle.X + obstacle.Size == Sections[i - 1].RightBorder - 1)
                         {
                             Sections[i].Obstacles.Add(obstacle);
                         }
@@ -410,7 +470,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine($"\tfield Array obstacles;");
                 foreach (var obstacle in Obstacles)
                 {
-                    writer.WriteLine($"\tfield Obstacle obstacle_{obstacle.X}_{obstacle.Y}_{(int)obstacle.Type};");
+                    writer.WriteLine($"\tfield Obstacle obstacle_{obstacle.X}_{obstacle.Y}_{(int)obstacle.Type}_{obstacle.Size};");
                 }
 
                 writer.WriteLine($"\tfield Array sections;");
@@ -461,12 +521,12 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
                 foreach (var obstacle in Obstacles)
                 {
-                    writer.WriteLine($"\t\tlet obstacle_{obstacle.X}_{obstacle.Y}_{(int)obstacle.Type} = Obstacle.new({obstacle.X}, {obstacle.Y}, {(int)obstacle.Type}, {obstacle.Height});");
+                    writer.WriteLine($"\t\tlet obstacle_{obstacle.X}_{obstacle.Y}_{(int)obstacle.Type}_{obstacle.Size} = Obstacle.new({obstacle.X}, {obstacle.Y}, {(int)obstacle.Type}, {obstacle.Height}, {obstacle.Size});");
                 }
 
                 for (int i = 0; i < Obstacles.Count; i++)
                 {
-                    writer.WriteLine($"\t\tlet obstacles[{i}] = obstacle_{Obstacles[i].X}_{Obstacles[i].Y}_{(int)Obstacles[i].Type};");
+                    writer.WriteLine($"\t\tlet obstacles[{i}] = obstacle_{Obstacles[i].X}_{Obstacles[i].Y}_{(int)Obstacles[i].Type}_{Obstacles[i].Size};");
                 }
 
 
@@ -494,7 +554,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
                         for (int j = 0; j < Sections[i].Obstacles.Count; j++)
                         {
-                            writer.WriteLine($"\t\tlet section{i}obstacles[{j}] = obstacle_{Sections[i].Obstacles[j].X}_{Sections[i].Obstacles[j].Y}_{(int)Sections[i].Obstacles[j].Type};");
+                            writer.WriteLine($"\t\tlet section{i}obstacles[{j}] = obstacle_{Sections[i].Obstacles[j].X}_{Sections[i].Obstacles[j].Y}_{(int)Sections[i].Obstacles[j].Type}_{Sections[i].Obstacles[j].Size};");
                         }
 
                         writer.WriteLine($"\t\tdo section{i}.set_obstacles(section{i}obstacles);");
