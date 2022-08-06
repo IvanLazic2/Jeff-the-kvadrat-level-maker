@@ -8,14 +8,14 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
 {
     public class Section
     {
-        public List<Platform1> Platforms1 { get; set; }
+        public List<Platform> Platforms { get; set; }
         public List<Obstacle> Obstacles { get; set; }
         public int LeftBorder { get; set; }
         public int RightBorder { get; set; }
 
         public Section()
         {
-            Platforms1 = new List<Platform1>();
+            Platforms = new List<Platform>();
             Obstacles = new List<Obstacle>();
         }
     }

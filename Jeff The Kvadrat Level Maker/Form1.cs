@@ -28,9 +28,12 @@ namespace Jeff_The_Kvadrat_Level_Maker
         bool isMouseDown;
 
         Character Character;
-        List<Platform1> Platform1s;
         List<Section> Sections;
+
+        List<Platform> Platforms;
+
         List<Obstacle> Obstacles;
+
 
 
         public Form1()
@@ -55,10 +58,10 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
             clear();
 
-            Character = new Character();
-            Platform1s = new List<Platform1>();
+            Character = new Character(0, 0);
+            //Platforms = new List<Platform>();
             Sections = new List<Section>();
-            Obstacles = new List<Obstacle>();
+            //Obstacles = new List<Obstacle>();
         }
 
         private void clear()
@@ -148,6 +151,12 @@ namespace Jeff_The_Kvadrat_Level_Maker
             pen = Pens.Black;
         }
 
+        private void SimplePlatformPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            brush = Brushes.DimGray;
+            pen = Pens.DimGray;
+        }
+
         private void Character_MouseClick(object sender, MouseEventArgs e)
         {
             brush = Brushes.Blue;
@@ -190,138 +199,82 @@ namespace Jeff_The_Kvadrat_Level_Maker
             pen = Pens.Tan;
         }
 
-        // done
-        private void button2_MouseClick(object sender, MouseEventArgs e)
+        private void StonePlatformPanel_MouseClick(object sender, MouseEventArgs e)
         {
-            Character = new Character();
-            Platform1s = new List<Platform1>();
-            Obstacles = new List<Obstacle>();
+            brush = Brushes.DarkGray;
+            pen = Pens.DarkGray;
+        }
 
-            Bitmap finishedImage = new Bitmap(pictureBox1.Image);
+        private void Brick1PlatformPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            brush = Brushes.LightGray;
+            pen = Pens.LightGray;
+        }
 
-            bool platStart = false;
-            int platSize = 0;
-            int platXCoord = 0;
+        private void Brick2PlatformPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            brush = Brushes.RosyBrown;
+            pen = Pens.RosyBrown;
+        }
 
-            bool spikedAreaStart = false;
-            int spikedAreaSize = 0;
-            int spikedAreaXCoord = 0;
+        private void RoboticPlatformPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            brush = Brushes.SlateGray;
+            pen = Pens.SlateGray;
+        }
 
+        private void StonePlatformSmallPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            brush = Brushes.DarkOliveGreen;
+            pen = Pens.DarkOliveGreen;
+        }
+
+        private void BrickPlatform1SmallPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            brush = Brushes.MediumAquamarine;
+            pen = Pens.MediumAquamarine;
+        }
+
+        private void BrickPlatform2SmallPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            brush = Brushes.Brown;
+            pen = Pens.Brown;
+        }
+
+        private void RoboticPanelSmall_MouseClick(object sender, MouseEventArgs e)
+        {
+            brush = Brushes.DarkSlateGray;
+            pen = Pens.DarkSlateGray;
+        }
+
+
+
+
+        private void SetSingleObjectsFromImage(Bitmap finishedImage)
+        {
             for (int j = 0; j < finishedImage.Height; j += 16)
             {
-                platStart = false;
-                platSize = 0;
-
-                spikedAreaStart = false;
-                spikedAreaSize = 0;
-
                 for (int i = 0; i < finishedImage.Width; i += 16)
                 {
                     Color c = finishedImage.GetPixel(i, j);
 
-                    if (c.R == 255 && c.G == 255 && c.B == 255) //white
+                    if (GameObject.GetGameObjectType(c) == GameObjectType.Character)
                     {
-                        if (platStart)
-                            platStart = false;
-
-                        if (spikedAreaStart)
-                            spikedAreaStart = false;
+                        Character = new Character(i / 16, j);
                     }
-                    else if (c.R == 0 && c.G == 0 && c.B == 0) //black
-                    {
-                        if (spikedAreaStart)
-                            spikedAreaStart = false;
-
-                        if (!platStart)
-                            platXCoord = i;
-
-                        platStart = true;
-                    }
-                    else if (c.R == 0 && c.G == 0 && c.B == 255) //blue
-                    {
-                        if (platStart)
-                            platStart = false;
-
-                        if (spikedAreaStart)
-                            spikedAreaStart = false;
-
-                        Character.X = i / 16;
-                        Character.Y = j;
-                    }
-                    else if (c.R == 255 && c.G == 0 && c.B == 0) //red
-                    {
-                        Console.WriteLine("Red");
-                    }
-                    else if (c.R == 255 && c.G == 255 && c.B == 0) //yellow
-                    {
-                        if (platStart)
-                            platStart = false;
-
-                        if (spikedAreaStart)
-                            spikedAreaStart = false;
-
-                        Obstacles.Add(new Obstacle(i / 16, j, ObstacleType.SmallSpikes));
-                    }
-                    else if (c.R == 255 && c.G == 165 && c.B == 0) //orange
-                    {
-                        if (platStart)
-                            platStart = false;
-
-                        if (spikedAreaStart)
-                            spikedAreaStart = false;
-
-                        Obstacles.Add(new Obstacle(i / 16, j, ObstacleType.MediumSpikes));
-                    }
-                    else if (c.R == 210 && c.G == 105 && c.B == 30) //chocolate
-                    {
-                        if (platStart)
-                            platStart = false;
-
-                        if (spikedAreaStart)
-                            spikedAreaStart = false;
-
-                        Obstacles.Add(new Obstacle(i / 16, j, ObstacleType.WeirdSpikes));
-                    }
-                    else if (c.R == 139 && c.G == 69 && c.B == 19) //saddle brown
-                    {
-                        if (platStart)
-                            platStart = false;
-
-                        if (spikedAreaStart)
-                            spikedAreaStart = false;
-
-                        Obstacles.Add(new Obstacle(i / 16, j, ObstacleType.LargeSpikes));
-                    }
-                    else if (c.R == 210 && c.G == 180 && c.B == 140) // tan
-                    {
-                        if (platStart)
-                            platStart = false;
-
-                        if (!spikedAreaStart)
-                            spikedAreaXCoord = i;
-
-                        spikedAreaStart = true;
-                    }
-
-                    if (platStart)
-                        platSize++;
-
-                    if (spikedAreaStart)
-                        spikedAreaSize++;
-
-                    if ((!platStart || i == finishedImage.Width - 16) && platSize != 0)
-                        Platform1s.Add(new Platform1(platXCoord / 16, j, platSize));
-
-                    if ((!spikedAreaStart || i == finishedImage.Width - 16) && spikedAreaSize != 0)
-                        Obstacles.Add(new Obstacle(spikedAreaXCoord / 16, j, ObstacleType.SpikedArea, spikedAreaSize));
-
-                    if (!platStart)
-                        platSize = 0;
-
-                    if (!spikedAreaStart)
-                        spikedAreaSize = 0;
                 }
             }
+        }
+
+        // done
+        private void button2_MouseClick(object sender, MouseEventArgs e)
+        {
+            Bitmap finishedImage = new Bitmap(pictureBox1.Image);
+
+            Platforms = Platform.GetAllPlatformsFromImage(finishedImage);
+            Obstacles = Obstacle.GetAllObstaclesFromImage(finishedImage);
+
+            SetSingleObjectsFromImage(finishedImage);
 
 
             generateSections();
@@ -333,7 +286,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             //int sectionsNum = levelWidth / Platform1s.Count / 2;
             Sections = new List<Section>();
 
-            Platform1s.Sort((p1, p2) => p1.Y.CompareTo(p2.Y)); //X
+            Platforms.Sort((p1, p2) => p1.Y.CompareTo(p2.Y)); //X
             Obstacles.Sort((o1, o2) => o2.Y.CompareTo(o2.Y));
 
             //List<Platform1> current = new List<Platform1>();
@@ -344,12 +297,12 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
             for (int k = 1; k <= screensNum; k++)
             {
-                for (int i = 0; i < Platform1s.Count; i++)
+                for (int i = 0; i < Platforms.Count; i++)
                 {
-                    if ((Platform1s[i].X >= (k - 1) * sectionWidth && Platform1s[i].X < k * sectionWidth) ||
-                        (Platform1s[i].X < k * sectionWidth && Platform1s[i].X + Platform1s[i].Size > (k-1) * sectionWidth))
+                    if ((Platforms[i].X >= (k - 1) * sectionWidth && Platforms[i].X < k * sectionWidth) ||
+                        (Platforms[i].X < k * sectionWidth && Platforms[i].X + Platforms[i].Size > (k - 1) * sectionWidth))
 
-                        currentSection.Platforms1.Add(Platform1s[i]);
+                        currentSection.Platforms.Add(Platforms[i]);
                 }
 
                 for (int i = 0; i < Obstacles.Count; i++)
@@ -378,15 +331,15 @@ namespace Jeff_The_Kvadrat_Level_Maker
             {
                 if (i != Sections.Count - 1)
                 {
-                    foreach (var platform in Sections[i + 1].Platforms1)
+                    foreach (var platform in Sections[i + 1].Platforms)
                     {
                         if (platform.X == Sections[i + 1].LeftBorder || platform.X == Sections[i + 1].LeftBorder + 1)
                         {
-                            Sections[i].Platforms1.Add(platform);
+                            Sections[i].Platforms.Add(platform);
                         }
                     }
 
-                    Sections[i].Platforms1 = new HashSet<Platform1>(Sections[i].Platforms1).ToList();
+                    Sections[i].Platforms = new HashSet<Platform>(Sections[i].Platforms).ToList();
 
                     foreach (var obstacle in Sections[i + 1].Obstacles)
                     {
@@ -401,15 +354,15 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
                 if (i != 0)
                 {
-                    foreach (var platform in Sections[i - 1].Platforms1)
+                    foreach (var platform in Sections[i - 1].Platforms)
                     {
                         if (platform.X + platform.Size == Sections[i - 1].RightBorder || platform.X + platform.Size == Sections[i - 1].RightBorder - 1)
                         {
-                            Sections[i].Platforms1.Add(platform);
+                            Sections[i].Platforms.Add(platform);
                         }
                     }
 
-                    Sections[i].Platforms1 = new HashSet<Platform1>(Sections[i].Platforms1).ToList();
+                    Sections[i].Platforms = new HashSet<Platform>(Sections[i].Platforms).ToList();
 
                     foreach (var obstacle in Sections[i - 1].Obstacles)
                     {
@@ -462,9 +415,9 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 //writer.WriteLine("\tfield Array section_sizes;");
 
                 writer.WriteLine($"\tfield Array platforms;");
-                foreach (var platform in Platform1s)
+                foreach (var platform in Platforms)
                 {
-                    writer.WriteLine($"\tfield Platform platform_{platform.X}_{platform.Y}_{platform.Size};");
+                    writer.WriteLine($"\tfield Platform platform_{platform.X}_{platform.Y}_{(int)platform.Type}_{platform.Size};");
                 }
 
                 writer.WriteLine($"\tfield Array obstacles;");
@@ -492,7 +445,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine($"\tconstructor {levelName} new()");
                 writer.WriteLine("\t{");
                 writer.WriteLine($"\t\tlet character = Character.new({Character.X}, {Character.Y - 24});");
-                writer.WriteLine($"\t\tlet platforms_num = {Platform1s.Count};");
+                writer.WriteLine($"\t\tlet platforms_num = {Platforms.Count};");
                 writer.WriteLine($"\t\tlet obstacles_num = {Obstacles.Count};");
                 writer.WriteLine($"\t\tlet sections_num = {Sections.Count};");
                 writer.WriteLine($"\t\tlet level_width = {levelWidth};");
@@ -504,20 +457,21 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 //    writer.WriteLine($"\t\tlet platform_section_sizes[{i}] = {Sectionsizes[i]};");
                 //}
 
-                writer.WriteLine($"\t\tlet platforms = Array.new({Platform1s.Count});");
+                if (Platforms.Count != 0)
+                    writer.WriteLine($"\t\tlet platforms = Array.new({Platforms.Count});");
 
-                foreach (var platform in Platform1s)
+                foreach (var platform in Platforms)
                 {
-                    writer.WriteLine($"\t\tlet platform_{platform.X}_{platform.Y}_{platform.Size} = Platform.new({platform.X}, {platform.Y}, {platform.Size});");
+                    writer.WriteLine($"\t\tlet platform_{platform.X}_{platform.Y}_{(int)platform.Type}_{platform.Size} = Platform.new({platform.X}, {platform.Y}, {(int)platform.Type}, {platform.Size});");
                 }
 
-                for (int i = 0; i < Platform1s.Count; i++)
+                for (int i = 0; i < Platforms.Count; i++)
                 {
-                    writer.WriteLine($"\t\tlet platforms[{i}] = platform_{Platform1s[i].X}_{Platform1s[i].Y}_{Platform1s[i].Size};");
+                    writer.WriteLine($"\t\tlet platforms[{i}] = platform_{Platforms[i].X}_{Platforms[i].Y}_{(int)Platforms[i].Type}_{Platforms[i].Size};");
                 }
 
-
-                writer.WriteLine($"\t\tlet obstacles = Array.new({Obstacles.Count});");
+                if (Obstacles.Count != 0)
+                    writer.WriteLine($"\t\tlet obstacles = Array.new({Obstacles.Count});");
 
                 foreach (var obstacle in Obstacles)
                 {
@@ -534,15 +488,15 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 {
                     //writer.WriteLine($"\t\tlet platform_section{i} = Array.new(platform_section_sizes[{i}]);");
 
-                    writer.WriteLine($"\t\tlet section{i} = Section.new({Sections[i].LeftBorder}, {Sections[i].RightBorder}, {Sections[i].Platforms1.Count}, {Sections[i].Obstacles.Count});");
+                    writer.WriteLine($"\t\tlet section{i} = Section.new({Sections[i].LeftBorder}, {Sections[i].RightBorder}, {Sections[i].Platforms.Count}, {Sections[i].Obstacles.Count});");
 
-                    if (Sections[i].Platforms1.Count != 0)
+                    if (Sections[i].Platforms.Count != 0)
                     {
-                        writer.WriteLine($"\t\tlet section{i}platforms = Array.new({Sections[i].Platforms1.Count});");
+                        writer.WriteLine($"\t\tlet section{i}platforms = Array.new({Sections[i].Platforms.Count});");
 
-                        for (int j = 0; j < Sections[i].Platforms1.Count; j++)
+                        for (int j = 0; j < Sections[i].Platforms.Count; j++)
                         {
-                            writer.WriteLine($"\t\tlet section{i}platforms[{j}] = platform_{Sections[i].Platforms1[j].X}_{Sections[i].Platforms1[j].Y}_{Sections[i].Platforms1[j].Size};");
+                            writer.WriteLine($"\t\tlet section{i}platforms[{j}] = platform_{Sections[i].Platforms[j].X}_{Sections[i].Platforms[j].Y}_{(int)Sections[i].Platforms[j].Type}_{Sections[i].Platforms[j].Size};");
                         }
 
                         writer.WriteLine($"\t\tdo section{i}.set_platforms(section{i}platforms);");

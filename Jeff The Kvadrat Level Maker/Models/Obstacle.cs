@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,10 +13,11 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
         MediumSpikes,
         WeirdSpikes,
         LargeSpikes,
-        SpikedArea
+        SpikedArea,
+        Unknown
     }
 
-    public class Obstacle
+    public class Obstacle : IGameObject
     {
         public int X { get; set; }
         public int Y { get; set; }
@@ -23,7 +25,10 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
         public int Height { get; set; }
         public int Size { get; set; }
 
-        public Obstacle(int x, int y, ObstacleType type, int size = 1)
+        GameObjectType IGameObject.Type { get; set; }
+        public bool Continuous { get; set; }
+
+        public Obstacle(int x, int y, ObstacleType type, int size)
         {
             X = x;
             Y = y;
@@ -34,19 +39,15 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
             {
                 case ObstacleType.SmallSpikes:
                     Height = 0;
-                    Size = 1;
                     break;
                 case ObstacleType.MediumSpikes:
                     Height = 16;
-                    Size = 1;
                     break;
                 case ObstacleType.WeirdSpikes:
                     Height = 48;
-                    Size = 1;
                     break;
                 case ObstacleType.LargeSpikes:
                     Height = 64;
-                    Size = 1;
                     break;
                 case ObstacleType.SpikedArea:
                     Height = 0;
@@ -54,6 +55,91 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
                 default:
                     break;
             }
+
+            Continuous = true;
+        }
+
+        public static List<Obstacle> GetAllObstaclesFromImage(Bitmap finishedImage)
+        {
+            List<Obstacle> obstacles = new List<Obstacle>();
+
+            foreach (var type in Enum.GetValues(typeof(ObstacleType)))
+            {
+                if ((ObstacleType)type != ObstacleType.Unknown)
+                {
+                    var result = GetObstacleFromImage(finishedImage, (ObstacleType)type);
+                    obstacles.AddRange(result);
+                }
+                
+            }
+
+            return obstacles;
+        }
+
+        public static List<Obstacle> GetObstacleFromImage(Bitmap finishedImage, ObstacleType type)
+        {
+            List<Obstacle> gameObjects = new List<Obstacle>();
+
+            bool objectStart = false;
+            int objectSize = 0;
+            int objectXCoord = 0;
+
+            for (int j = 0; j < finishedImage.Height; j += 16)
+            {
+                objectStart = false;
+                objectSize = 0;
+
+                for (int i = 0; i < finishedImage.Width; i += 16)
+                {
+                    Color c = finishedImage.GetPixel(i, j);
+
+                    if (GetObstacleTypeByColor(c) == type)
+                    {
+                        if (!objectStart)
+                            objectXCoord = i;
+
+                        objectStart = true;
+                    }
+                    else
+                    {
+                        if (objectStart)
+                            objectStart = false;
+                    }
+
+                    if (objectStart)
+                        objectSize++;
+
+                    if ((!objectStart || i == finishedImage.Width - 16) && objectSize != 0)
+                        gameObjects.Add(new Obstacle(objectXCoord / 16, j, type, objectSize));
+
+                    if (!objectStart)
+                        objectSize = 0;
+                }
+            }
+
+            return gameObjects;
+        }
+
+
+
+
+
+        public static ObstacleType GetObstacleTypeByColor(Color c)
+        {
+            ObstacleType result = ObstacleType.Unknown;
+
+            if (c.R == 255 && c.G == 255 && c.B == 0) // yellow
+                result = ObstacleType.SmallSpikes;
+            else if (c.R == 255 && c.G == 165 && c.B == 0) // orange
+                result = ObstacleType.MediumSpikes;
+            else if (c.R == 210 && c.G == 105 && c.B == 30) // chocolate
+                result = ObstacleType.WeirdSpikes;
+            else if (c.R == 139 && c.G == 69 && c.B == 19) // saddle brown
+                result = ObstacleType.LargeSpikes;
+            else if (c.R == 210 && c.G == 180 && c.B == 140) // tan
+                result = ObstacleType.SpikedArea;
+
+            return result;
         }
     }
 }

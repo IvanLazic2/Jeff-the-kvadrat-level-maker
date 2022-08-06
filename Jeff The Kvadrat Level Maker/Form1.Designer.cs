@@ -38,6 +38,10 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.Enemy1Panel = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.SimplePlatformPanel = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.SpikedAreaPanel = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -50,8 +54,22 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label4 = new System.Windows.Forms.Label();
             this.fileNameTextBox = new System.Windows.Forms.TextBox();
-            this.SpikedAreaPanel = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
+            this.StonePlatformPanel = new System.Windows.Forms.Panel();
+            this.Brick1PlatformPanel = new System.Windows.Forms.Panel();
+            this.Brick2PlatformPanel = new System.Windows.Forms.Panel();
+            this.RoboticPlatformPanel = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.RoboticPanelSmall = new System.Windows.Forms.Panel();
+            this.BrickPlatform2SmallPanel = new System.Windows.Forms.Panel();
+            this.BrickPlatform1SmallPanel = new System.Windows.Forms.Panel();
+            this.StonePlatformSmallPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -71,7 +89,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(15, 230);
+            this.button1.Location = new System.Drawing.Point(12, 410);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -82,7 +100,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // Platform1Panel
             // 
             this.Platform1Panel.BackColor = System.Drawing.Color.Black;
-            this.Platform1Panel.Location = new System.Drawing.Point(15, 14);
+            this.Platform1Panel.Location = new System.Drawing.Point(3, 3);
             this.Platform1Panel.Name = "Platform1Panel";
             this.Platform1Panel.Size = new System.Drawing.Size(16, 16);
             this.Platform1Panel.TabIndex = 2;
@@ -91,16 +109,16 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(38, 15);
+            this.label1.Location = new System.Drawing.Point(24, 6);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 13);
+            this.label1.Size = new System.Drawing.Size(78, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Platform 1";
+            this.label1.Text = "Simple platform";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(38, 36);
+            this.label2.Location = new System.Drawing.Point(26, 165);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 13);
             this.label2.TabIndex = 4;
@@ -109,7 +127,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // CharacterPanel
             // 
             this.CharacterPanel.BackColor = System.Drawing.Color.Blue;
-            this.CharacterPanel.Location = new System.Drawing.Point(15, 36);
+            this.CharacterPanel.Location = new System.Drawing.Point(3, 165);
             this.CharacterPanel.Name = "CharacterPanel";
             this.CharacterPanel.Size = new System.Drawing.Size(16, 16);
             this.CharacterPanel.TabIndex = 5;
@@ -118,7 +136,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // Enemy1Panel
             // 
             this.Enemy1Panel.BackColor = System.Drawing.Color.Red;
-            this.Enemy1Panel.Location = new System.Drawing.Point(15, 58);
+            this.Enemy1Panel.Location = new System.Drawing.Point(3, 187);
             this.Enemy1Panel.Name = "Enemy1Panel";
             this.Enemy1Panel.Size = new System.Drawing.Size(16, 16);
             this.Enemy1Panel.TabIndex = 6;
@@ -127,7 +145,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(38, 58);
+            this.label3.Location = new System.Drawing.Point(26, 187);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(48, 13);
             this.label3.TabIndex = 7;
@@ -135,6 +153,24 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label15);
+            this.panel1.Controls.Add(this.label16);
+            this.panel1.Controls.Add(this.label17);
+            this.panel1.Controls.Add(this.label18);
+            this.panel1.Controls.Add(this.RoboticPanelSmall);
+            this.panel1.Controls.Add(this.BrickPlatform2SmallPanel);
+            this.panel1.Controls.Add(this.BrickPlatform1SmallPanel);
+            this.panel1.Controls.Add(this.StonePlatformSmallPanel);
+            this.panel1.Controls.Add(this.label14);
+            this.panel1.Controls.Add(this.label13);
+            this.panel1.Controls.Add(this.label12);
+            this.panel1.Controls.Add(this.label11);
+            this.panel1.Controls.Add(this.RoboticPlatformPanel);
+            this.panel1.Controls.Add(this.Brick2PlatformPanel);
+            this.panel1.Controls.Add(this.Brick1PlatformPanel);
+            this.panel1.Controls.Add(this.StonePlatformPanel);
+            this.panel1.Controls.Add(this.label10);
+            this.panel1.Controls.Add(this.SimplePlatformPanel);
             this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.SpikedAreaPanel);
             this.panel1.Controls.Add(this.label8);
@@ -146,21 +182,56 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.panel1.Controls.Add(this.MediumSpikesPanel);
             this.panel1.Controls.Add(this.SmallSpikesPanel);
             this.panel1.Controls.Add(this.Platform1Panel);
-            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.Enemy1Panel);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.CharacterPanel);
-            this.panel1.Location = new System.Drawing.Point(597, 12);
+            this.panel1.Location = new System.Drawing.Point(537, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 256);
+            this.panel1.Size = new System.Drawing.Size(260, 399);
             this.panel1.TabIndex = 8;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(138, 3);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(104, 13);
+            this.label10.TabIndex = 16;
+            this.label10.Text = "Simple platform small";
+            // 
+            // SimplePlatformPanel
+            // 
+            this.SimplePlatformPanel.BackColor = System.Drawing.Color.DimGray;
+            this.SimplePlatformPanel.Location = new System.Drawing.Point(119, 3);
+            this.SimplePlatformPanel.Name = "SimplePlatformPanel";
+            this.SimplePlatformPanel.Size = new System.Drawing.Size(16, 16);
+            this.SimplePlatformPanel.TabIndex = 12;
+            this.SimplePlatformPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SimplePlatformPanel_MouseClick);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(25, 328);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(64, 13);
+            this.label9.TabIndex = 15;
+            this.label9.Text = "Spiked area";
+            // 
+            // SpikedAreaPanel
+            // 
+            this.SpikedAreaPanel.BackColor = System.Drawing.Color.Tan;
+            this.SpikedAreaPanel.Location = new System.Drawing.Point(3, 325);
+            this.SpikedAreaPanel.Name = "SpikedAreaPanel";
+            this.SpikedAreaPanel.Size = new System.Drawing.Size(16, 16);
+            this.SpikedAreaPanel.TabIndex = 11;
+            this.SpikedAreaPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SpikedAreaPanel_MouseClick);
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(37, 166);
+            this.label8.Location = new System.Drawing.Point(25, 306);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(67, 13);
             this.label8.TabIndex = 14;
@@ -169,7 +240,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(37, 144);
+            this.label7.Location = new System.Drawing.Point(25, 284);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(68, 13);
             this.label7.TabIndex = 13;
@@ -178,7 +249,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(37, 122);
+            this.label6.Location = new System.Drawing.Point(25, 262);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(77, 13);
             this.label6.TabIndex = 12;
@@ -187,7 +258,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(37, 100);
+            this.label5.Location = new System.Drawing.Point(25, 240);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(65, 13);
             this.label5.TabIndex = 11;
@@ -196,7 +267,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // LargeSpikesPanel
             // 
             this.LargeSpikesPanel.BackColor = System.Drawing.Color.SaddleBrown;
-            this.LargeSpikesPanel.Location = new System.Drawing.Point(15, 163);
+            this.LargeSpikesPanel.Location = new System.Drawing.Point(3, 303);
             this.LargeSpikesPanel.Name = "LargeSpikesPanel";
             this.LargeSpikesPanel.Size = new System.Drawing.Size(16, 16);
             this.LargeSpikesPanel.TabIndex = 10;
@@ -205,7 +276,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // WeirdSpikesPanel
             // 
             this.WeirdSpikesPanel.BackColor = System.Drawing.Color.Chocolate;
-            this.WeirdSpikesPanel.Location = new System.Drawing.Point(15, 141);
+            this.WeirdSpikesPanel.Location = new System.Drawing.Point(3, 281);
             this.WeirdSpikesPanel.Name = "WeirdSpikesPanel";
             this.WeirdSpikesPanel.Size = new System.Drawing.Size(16, 16);
             this.WeirdSpikesPanel.TabIndex = 9;
@@ -214,7 +285,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // MediumSpikesPanel
             // 
             this.MediumSpikesPanel.BackColor = System.Drawing.Color.Orange;
-            this.MediumSpikesPanel.Location = new System.Drawing.Point(15, 119);
+            this.MediumSpikesPanel.Location = new System.Drawing.Point(3, 259);
             this.MediumSpikesPanel.Name = "MediumSpikesPanel";
             this.MediumSpikesPanel.Size = new System.Drawing.Size(16, 16);
             this.MediumSpikesPanel.TabIndex = 8;
@@ -223,7 +294,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // SmallSpikesPanel
             // 
             this.SmallSpikesPanel.BackColor = System.Drawing.Color.Yellow;
-            this.SmallSpikesPanel.Location = new System.Drawing.Point(15, 97);
+            this.SmallSpikesPanel.Location = new System.Drawing.Point(3, 237);
             this.SmallSpikesPanel.Name = "SmallSpikesPanel";
             this.SmallSpikesPanel.Size = new System.Drawing.Size(16, 16);
             this.SmallSpikesPanel.TabIndex = 7;
@@ -264,23 +335,149 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.fileNameTextBox.Size = new System.Drawing.Size(115, 20);
             this.fileNameTextBox.TabIndex = 12;
             // 
-            // SpikedAreaPanel
+            // StonePlatformPanel
             // 
-            this.SpikedAreaPanel.BackColor = System.Drawing.Color.Tan;
-            this.SpikedAreaPanel.Location = new System.Drawing.Point(15, 185);
-            this.SpikedAreaPanel.Name = "SpikedAreaPanel";
-            this.SpikedAreaPanel.Size = new System.Drawing.Size(16, 16);
-            this.SpikedAreaPanel.TabIndex = 11;
-            this.SpikedAreaPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SpikedAreaPanel_MouseClick);
+            this.StonePlatformPanel.BackColor = System.Drawing.Color.DarkGray;
+            this.StonePlatformPanel.Location = new System.Drawing.Point(3, 25);
+            this.StonePlatformPanel.Name = "StonePlatformPanel";
+            this.StonePlatformPanel.Size = new System.Drawing.Size(16, 16);
+            this.StonePlatformPanel.TabIndex = 13;
+            this.StonePlatformPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.StonePlatformPanel_MouseClick);
             // 
-            // label9
+            // Brick1PlatformPanel
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(37, 188);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(64, 13);
-            this.label9.TabIndex = 15;
-            this.label9.Text = "Spiked area";
+            this.Brick1PlatformPanel.BackColor = System.Drawing.Color.LightGray;
+            this.Brick1PlatformPanel.Location = new System.Drawing.Point(3, 47);
+            this.Brick1PlatformPanel.Name = "Brick1PlatformPanel";
+            this.Brick1PlatformPanel.Size = new System.Drawing.Size(16, 16);
+            this.Brick1PlatformPanel.TabIndex = 14;
+            this.Brick1PlatformPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Brick1PlatformPanel_MouseClick);
+            // 
+            // Brick2PlatformPanel
+            // 
+            this.Brick2PlatformPanel.BackColor = System.Drawing.Color.RosyBrown;
+            this.Brick2PlatformPanel.Location = new System.Drawing.Point(3, 69);
+            this.Brick2PlatformPanel.Name = "Brick2PlatformPanel";
+            this.Brick2PlatformPanel.Size = new System.Drawing.Size(16, 16);
+            this.Brick2PlatformPanel.TabIndex = 15;
+            this.Brick2PlatformPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Brick2PlatformPanel_MouseClick);
+            // 
+            // RoboticPlatformPanel
+            // 
+            this.RoboticPlatformPanel.BackColor = System.Drawing.Color.SlateGray;
+            this.RoboticPlatformPanel.Location = new System.Drawing.Point(3, 91);
+            this.RoboticPlatformPanel.Name = "RoboticPlatformPanel";
+            this.RoboticPlatformPanel.Size = new System.Drawing.Size(16, 16);
+            this.RoboticPlatformPanel.TabIndex = 16;
+            this.RoboticPlatformPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.RoboticPlatformPanel_MouseClick);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(24, 28);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(75, 13);
+            this.label11.TabIndex = 17;
+            this.label11.Text = "Stone platform";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(25, 50);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(80, 13);
+            this.label12.TabIndex = 18;
+            this.label12.Text = "Brick platform 1";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(26, 72);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(80, 13);
+            this.label13.TabIndex = 19;
+            this.label13.Text = "Brick platform 2";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(26, 94);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(84, 13);
+            this.label14.TabIndex = 20;
+            this.label14.Text = "Robotic platform";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(142, 94);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(110, 13);
+            this.label15.TabIndex = 28;
+            this.label15.Text = "Robotic platform small";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(142, 72);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(106, 13);
+            this.label16.TabIndex = 27;
+            this.label16.Text = "Brick platform 2 small";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(141, 50);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(106, 13);
+            this.label17.TabIndex = 26;
+            this.label17.Text = "Brick platform 1 small";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(140, 28);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(101, 13);
+            this.label18.TabIndex = 25;
+            this.label18.Text = "Stone platform small";
+            // 
+            // RoboticPanelSmall
+            // 
+            this.RoboticPanelSmall.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.RoboticPanelSmall.Location = new System.Drawing.Point(119, 91);
+            this.RoboticPanelSmall.Name = "RoboticPanelSmall";
+            this.RoboticPanelSmall.Size = new System.Drawing.Size(16, 16);
+            this.RoboticPanelSmall.TabIndex = 24;
+            this.RoboticPanelSmall.MouseClick += new System.Windows.Forms.MouseEventHandler(this.RoboticPanelSmall_MouseClick);
+            // 
+            // BrickPlatform2SmallPanel
+            // 
+            this.BrickPlatform2SmallPanel.BackColor = System.Drawing.Color.Brown;
+            this.BrickPlatform2SmallPanel.Location = new System.Drawing.Point(119, 69);
+            this.BrickPlatform2SmallPanel.Name = "BrickPlatform2SmallPanel";
+            this.BrickPlatform2SmallPanel.Size = new System.Drawing.Size(16, 16);
+            this.BrickPlatform2SmallPanel.TabIndex = 23;
+            this.BrickPlatform2SmallPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.BrickPlatform2SmallPanel_MouseClick);
+            // 
+            // BrickPlatform1SmallPanel
+            // 
+            this.BrickPlatform1SmallPanel.BackColor = System.Drawing.Color.MediumAquamarine;
+            this.BrickPlatform1SmallPanel.Location = new System.Drawing.Point(119, 47);
+            this.BrickPlatform1SmallPanel.Name = "BrickPlatform1SmallPanel";
+            this.BrickPlatform1SmallPanel.Size = new System.Drawing.Size(16, 16);
+            this.BrickPlatform1SmallPanel.TabIndex = 22;
+            this.BrickPlatform1SmallPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.BrickPlatform1SmallPanel_MouseClick);
+            // 
+            // StonePlatformSmallPanel
+            // 
+            this.StonePlatformSmallPanel.BackColor = System.Drawing.Color.DarkOliveGreen;
+            this.StonePlatformSmallPanel.Location = new System.Drawing.Point(119, 25);
+            this.StonePlatformSmallPanel.Name = "StonePlatformSmallPanel";
+            this.StonePlatformSmallPanel.Size = new System.Drawing.Size(16, 16);
+            this.StonePlatformSmallPanel.TabIndex = 21;
+            this.StonePlatformSmallPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.StonePlatformSmallPanel_MouseClick);
             // 
             // Form1
             // 
@@ -292,6 +489,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.button1);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -328,6 +526,24 @@ namespace Jeff_The_Kvadrat_Level_Maker
         private System.Windows.Forms.Panel SmallSpikesPanel;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Panel SpikedAreaPanel;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Panel SimplePlatformPanel;
+        private System.Windows.Forms.Panel RoboticPlatformPanel;
+        private System.Windows.Forms.Panel Brick2PlatformPanel;
+        private System.Windows.Forms.Panel Brick1PlatformPanel;
+        private System.Windows.Forms.Panel StonePlatformPanel;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Panel RoboticPanelSmall;
+        private System.Windows.Forms.Panel BrickPlatform2SmallPanel;
+        private System.Windows.Forms.Panel BrickPlatform1SmallPanel;
+        private System.Windows.Forms.Panel StonePlatformSmallPanel;
     }
 }
 

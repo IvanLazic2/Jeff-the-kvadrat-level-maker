@@ -54,8 +54,10 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Character.cs" />
+    <Compile Include="Models\GameObject.cs" />
+    <Compile Include="Models\IGameObject.cs" />
     <Compile Include="Models\Obstacle.cs" />
-    <Compile Include="Models\Platform1.cs" />
+    <Compile Include="Models\Platform.cs" />
     <Compile Include="Models\Section.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
