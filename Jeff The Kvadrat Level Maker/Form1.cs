@@ -34,6 +34,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
         List<Obstacle> Obstacles;
 
+        int[,] Matrix;
+
 
 
         public Form1()
@@ -277,6 +279,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
             SetSingleObjectsFromImage(finishedImage);
 
 
+            generateMapMatrix();
+
             generateSections();
             writeToFile();
         }
@@ -381,16 +385,32 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
         }
 
+        private void generateMapMatrix()
+        {
+            Matrix = new int[levelWidth, levelHeight];
+
+            int numOfPlatformTypes = 11;
+            foreach (var platform in Platforms)
+            {
+                for (int i = 0; i < platform.Size; i++)
+                {
+                    Matrix[platform.X + i, (int)(platform.Y / 16)] = (int)platform.Type + 1;
+                }
+            }
+
+            foreach (var obstacle in Obstacles)
+            {
+                for (int i = 0; i < obstacle.Size; i++)
+                {
+                    for (int j = 0; j < (int)((obstacle.Height + 16) / 16); j++)
+                    {
+                        Matrix[obstacle.X + i, (int)(obstacle.Y / 16) - j] = numOfPlatformTypes + (int)obstacle.Type;
+                    }
+                }
+            }
+        }
 
 
-
-
-        // MOZDA?!?!
-        // PROBLEM: svaki puta se kreira nova platforma, a u vise sekcija se moze nalazit ista platforma
-        // RJESENJE: kreiraj ih sve prije i onda ih razvrstavaj po sekcijama
-        // IDEJA: identificirati platforme po x, y i size propertiju, npr. Platform platform_0_0_64 = Platform.new(0, 0, 64);
-
-        // PROBLEM: kada je sekcija prazna (nema platformi) dogodi se section = Array.new(0) sto se ne bi smjelo dogodit
 
         private void writeToFile()
         {
@@ -405,28 +425,30 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine("{");
                 writer.WriteLine("\tfield Character character;");
 
-                writer.WriteLine("\tfield int platforms_num;");
-                writer.WriteLine("\tfield int obstacles_num;");
-                writer.WriteLine("\tfield int sections_num;");
+                writer.WriteLine("\tfield int PlatformsCount;");
+                writer.WriteLine("\tfield int ObstaclesCount;");
+                //writer.WriteLine("\tfield int sections_num;");
 
-                writer.WriteLine("\tfield int level_width;");
-                writer.WriteLine("\tfield int section_width;");
+                //writer.WriteLine("\tfield int LevelWidth;");
+                //writer.WriteLine("\tfield int section_width;");
 
                 //writer.WriteLine("\tfield Array section_sizes;");
 
-                writer.WriteLine($"\tfield Array platforms;");
-                foreach (var platform in Platforms)
+                writer.WriteLine($"\tfield Array Platforms;");
+                for (int i = 0; i < Platforms.Count; i++)
                 {
-                    writer.WriteLine($"\tfield Platform platform_{platform.X}_{platform.Y}_{(int)platform.Type}_{platform.Size};");
+                    //writer.WriteLine($"\tfield Platform platform_{platform.X}_{platform.Y}_{(int)platform.Type}_{platform.Size};");
+                    writer.WriteLine($"\tfield Platform platform{i};");
                 }
 
-                writer.WriteLine($"\tfield Array obstacles;");
-                foreach (var obstacle in Obstacles)
+                writer.WriteLine($"\tfield Array Obstacles;");
+                for (int i = 0; i < Obstacles.Count; i++)
                 {
-                    writer.WriteLine($"\tfield Obstacle obstacle_{obstacle.X}_{obstacle.Y}_{(int)obstacle.Type}_{obstacle.Size};");
+                    //writer.WriteLine($"\tfield Obstacle obstacle_{obstacle.X}_{obstacle.Y}_{(int)obstacle.Type}_{obstacle.Size};");
+                    writer.WriteLine($"\tfield Obstacle obstacle{i};");
                 }
 
-                writer.WriteLine($"\tfield Array sections;");
+                /*writer.WriteLine($"\tfield Array sections;");
                 for (int i = 0; i < Sections.Count; i++)
                 {
                     writer.WriteLine($"\tfield Section section{i};");
@@ -440,17 +462,25 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 for (int i = 0; i < Sections.Count; i++)
                 {
                     writer.WriteLine($"\tfield Array section{i}obstacles;");
+                }*/
+
+                writer.WriteLine($"\tfield Array Map;");
+                for (int i = 0; i < levelWidth; i++)
+                {
+                    writer.WriteLine($"\tfield Array map{i};");
                 }
+                writer.WriteLine($"\tfield int MapWidth;");
+                writer.WriteLine($"\tfield int MapHeight;");
 
                 writer.WriteLine($"\tconstructor {levelName} new()");
                 writer.WriteLine("\t{");
                 writer.WriteLine($"\t\tlet character = Character.new({Character.X}, {Character.Y - 24});");
-                writer.WriteLine($"\t\tlet platforms_num = {Platforms.Count};");
-                writer.WriteLine($"\t\tlet obstacles_num = {Obstacles.Count};");
-                writer.WriteLine($"\t\tlet sections_num = {Sections.Count};");
-                writer.WriteLine($"\t\tlet level_width = {levelWidth};");
-                writer.WriteLine($"\t\tlet section_width = {sectionWidth};");
-                writer.WriteLine($"\t\tlet sections = Array.new(sections_num);");
+                writer.WriteLine($"\t\tlet PlatformsCount = {Platforms.Count};");
+                writer.WriteLine($"\t\tlet ObstaclesCount = {Obstacles.Count};");
+                //writer.WriteLine($"\t\tlet sections_num = {Sections.Count};");
+                //writer.WriteLine($"\t\tlet level_width = {levelWidth};");
+                //writer.WriteLine($"\t\tlet section_width = {sectionWidth};");
+                //writer.WriteLine($"\t\tlet sections = Array.new(sections_num);");
                 //writer.WriteLine($"\t\tlet platform_section_sizes = Array.new(platform_sections_num);");
                 //for (int i = 0; i < Sectionsizes.Count; i++)
                 //{
@@ -458,33 +488,45 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 //}
 
                 if (Platforms.Count != 0)
-                    writer.WriteLine($"\t\tlet platforms = Array.new({Platforms.Count});");
+                    writer.WriteLine($"\t\tlet Platforms = Array.new({Platforms.Count});");
 
-                foreach (var platform in Platforms)
+                /*foreach (var platform in Platforms)
                 {
                     writer.WriteLine($"\t\tlet platform_{platform.X}_{platform.Y}_{(int)platform.Type}_{platform.Size} = Platform.new({platform.X}, {platform.Y}, {(int)platform.Type}, {platform.Size});");
+                }*/
+
+                for (int i = 0; i < Platforms.Count; i++)
+                {
+                    writer.WriteLine($"\t\tlet platform{i} = Platform.new({Platforms[i].X}, {Platforms[i].Y}, {(int)Platforms[i].Type}, {Platforms[i].Size});");
                 }
 
                 for (int i = 0; i < Platforms.Count; i++)
                 {
-                    writer.WriteLine($"\t\tlet platforms[{i}] = platform_{Platforms[i].X}_{Platforms[i].Y}_{(int)Platforms[i].Type}_{Platforms[i].Size};");
+                    writer.WriteLine($"\t\tlet Platforms[{i}] = platform{i};");
                 }
 
                 if (Obstacles.Count != 0)
-                    writer.WriteLine($"\t\tlet obstacles = Array.new({Obstacles.Count});");
+                    writer.WriteLine($"\t\tlet Obstacles = Array.new({Obstacles.Count});");
 
-                foreach (var obstacle in Obstacles)
+                /*foreach (var obstacle in Obstacles)
                 {
                     writer.WriteLine($"\t\tlet obstacle_{obstacle.X}_{obstacle.Y}_{(int)obstacle.Type}_{obstacle.Size} = Obstacle.new({obstacle.X}, {obstacle.Y}, {(int)obstacle.Type}, {obstacle.Height}, {obstacle.Size});");
+                }*/
+
+                for (int i = 0; i < Obstacles.Count; i++)
+                {
+                    writer.WriteLine($"\t\tlet obstacle{i} = Obstacle.new({Obstacles[i].X}, {Obstacles[i].Y}, {(int)Obstacles[i].Type}, {Obstacles[i].Height}, {Obstacles[i].Size});");
                 }
 
                 for (int i = 0; i < Obstacles.Count; i++)
                 {
-                    writer.WriteLine($"\t\tlet obstacles[{i}] = obstacle_{Obstacles[i].X}_{Obstacles[i].Y}_{(int)Obstacles[i].Type}_{Obstacles[i].Size};");
+                    writer.WriteLine($"\t\tlet Obstacles[{i}] = obstacle{i};");
                 }
 
 
-                for (int i = 0; i < Sections.Count; i++)
+
+
+                /*for (int i = 0; i < Sections.Count; i++)
                 {
                     //writer.WriteLine($"\t\tlet platform_section{i} = Array.new(platform_section_sizes[{i}]);");
 
@@ -516,24 +558,38 @@ namespace Jeff_The_Kvadrat_Level_Maker
                     
                     writer.WriteLine($"\t\tlet sections[{i}] = section{i};");
 
-                }
+                }*/
 
-                
+                writer.WriteLine($"\t\tlet Map = Array.new({levelWidth});");
+                for (int i = 0; i < levelWidth; i++)
+                {
+                    writer.WriteLine($"\t\tlet map{i} = Array.new({levelHeight});");
+                    for (int j = 0; j < levelHeight; j++)
+                    {
+                        writer.WriteLine($"\t\tlet map{i}[{j}] = {Matrix[i, j]};");
+                    }
+                    writer.WriteLine($"\t\tlet Map[{i}] = map{i};");
+                }
+                writer.WriteLine($"\t\tlet MapWidth = {levelWidth};");
+                writer.WriteLine($"\t\tlet MapHeight = {levelWidth};");
 
 
 
                 writer.WriteLine("\t\treturn this;");
                 writer.WriteLine("\t}");
-                writer.WriteLine("\tmethod int get_platforms_num() { return platforms_num; }");
-                writer.WriteLine("\tmethod int get_obstacles_num() { return obstacles_num; }");
-                writer.WriteLine("\tmethod int get_sections_num() { return sections_num; }");
-                writer.WriteLine("\tmethod int get_level_width() { return level_width; }");
-                writer.WriteLine("\tmethod int get_section_width() { return section_width; }");
-                writer.WriteLine("\tmethod Array get_platforms() { return platforms; }");
-                writer.WriteLine("\tmethod Array get_obstacles() { return obstacles; }");
-                writer.WriteLine("\tmethod Array get_sections() { return sections; }");
-                writer.WriteLine("\tmethod Array get_section(int index) { return sections[index]; }");
-                writer.WriteLine("\tmethod Character get_character() { return character; }");
+                writer.WriteLine("\tmethod int getPlatformsCount() { return PlatformsCount; }");
+                writer.WriteLine("\tmethod int getObstaclesCount() { return ObstaclesCount; }");
+                //writer.WriteLine("\tmethod int get_sections_num() { return sections_num; }");
+                //writer.WriteLine("\tmethod int getLevelWidth() { return LevelWidth; }");
+                //writer.WriteLine("\tmethod int get_section_width() { return section_width; }");
+                writer.WriteLine("\tmethod Array getPlatforms() { return Platforms; }");
+                writer.WriteLine("\tmethod Array getObstacles() { return Obstacles; }");
+                //writer.WriteLine("\tmethod Array get_sections() { return sections; }");
+                //writer.WriteLine("\tmethod Array get_section(int index) { return sections[index]; }");
+                writer.WriteLine("\tmethod Character getCharacter() { return character; }");
+                writer.WriteLine("\tmethod Array getMap() { return Map; }");
+                writer.WriteLine("\tmethod int getMapWidth() { return MapWidth; }");
+                writer.WriteLine("\tmethod int getMapHeight() { return MapHeight; }");
                 writer.WriteLine("}");
             }
         }
