@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace Jeff_The_Kvadrat_Level_Maker.Models
 {
-    public class Character : GameObject
+    public class Character
     {
-        //public int X { get; set; }
-        //public int Y { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
 
         public Character(int x, int y)
         {
             X = x;
             Y = y;
-            Continuous = false;
         }
     }
 }

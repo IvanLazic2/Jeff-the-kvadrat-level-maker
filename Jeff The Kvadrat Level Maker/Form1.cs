@@ -31,8 +31,9 @@ namespace Jeff_The_Kvadrat_Level_Maker
         List<Section> Sections;
 
         List<Platform> Platforms;
-
         List<Obstacle> Obstacles;
+        List<Enemy> Enemies;
+        List<Collectable> Collectables;
 
         int[,] Matrix;
 
@@ -64,6 +65,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
             //Platforms = new List<Platform>();
             Sections = new List<Section>();
             //Obstacles = new List<Obstacle>();
+            Enemies = new List<Enemy>();
+            Collectables = new List<Collectable>();
         }
 
         private void clear()
@@ -165,12 +168,6 @@ namespace Jeff_The_Kvadrat_Level_Maker
             pen = Pens.Blue;
         }
 
-        private void Enemy1_MouseClick(object sender, MouseEventArgs e)
-        {
-            brush = Brushes.Red;
-            pen = Pens.Red;
-        }
-
         private void SmallSpikesPanel_MouseClick(object sender, MouseEventArgs e)
         {
             brush = Brushes.Yellow;
@@ -249,21 +246,75 @@ namespace Jeff_The_Kvadrat_Level_Maker
             pen = Pens.DarkSlateGray;
         }
 
+        private void Spider_MouseClick(object sender, MouseEventArgs e)
+        {
+            brush = Brushes.Red;
+            pen = Pens.Red;
+        }
+
+        private void EvilJeffMeleePanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            brush = Brushes.IndianRed;
+            pen = Pens.IndianRed;
+        }
+
+        private void EvilJeffRangedPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            brush = Brushes.Maroon;
+            pen = Pens.Maroon;
+        }
+
+        private void BatPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            brush = Brushes.Salmon;
+            pen = Pens.Salmon;
+        }
+
+        private void CoinPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            brush = Brushes.Gold;
+            pen = Pens.Gold;
+        }
+
+        private void LifePanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            brush = Brushes.DeepPink;
+            pen = Pens.DeepPink;
+        }
+
 
 
 
         private void SetSingleObjectsFromImage(Bitmap finishedImage)
         {
+            Enemies = new List<Enemy>();
+            Collectables = new List<Collectable>();
+
             for (int j = 0; j < finishedImage.Height; j += 16)
             {
                 for (int i = 0; i < finishedImage.Width; i += 16)
                 {
                     Color c = finishedImage.GetPixel(i, j);
 
-                    if (GameObject.GetGameObjectType(c) == GameObjectType.Character)
+                    switch (GameObject.GetGameObjectType(c))
+                    {
+                        case GameObjectType.Character:
+                            Character = new Character(i / 16, j);
+                            break;
+                        case GameObjectType.Enemy:
+                            Enemies.Add(new Enemy(i / 16, j, Enemy.GetOEnemyTypeByColor(c)));
+                            break;
+                        case GameObjectType.Collectable:
+                            Collectables.Add(new Collectable(i / 16, j, Collectable.GetCollectableTypeByColor(c)));
+                            break;
+                        default:
+                            break;
+                    }
+
+                    /*if (GameObject.GetGameObjectType(c) == GameObjectType.Character)
                     {
                         Character = new Character(i / 16, j);
-                    }
+                    }*/
                 }
             }
         }
@@ -281,7 +332,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
             generateMapMatrix();
 
-            generateSections();
+            //generateSections();
             writeToFile();
         }
 
@@ -408,6 +459,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
                     }
                 }
             }
+
+            // TODO: dodat collectables u matricu
         }
 
 
@@ -427,6 +480,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
                 writer.WriteLine("\tfield int PlatformsCount;");
                 writer.WriteLine("\tfield int ObstaclesCount;");
+                writer.WriteLine("\tfield int EnemiesCount;");
+                writer.WriteLine("\tfield int CollectablesCount;");
                 //writer.WriteLine("\tfield int sections_num;");
 
                 //writer.WriteLine("\tfield int LevelWidth;");
@@ -435,18 +490,32 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 //writer.WriteLine("\tfield Array section_sizes;");
 
                 writer.WriteLine($"\tfield Array Platforms;");
-                for (int i = 0; i < Platforms.Count; i++)
+                /*for (int i = 0; i < Platforms.Count; i++)
                 {
                     //writer.WriteLine($"\tfield Platform platform_{platform.X}_{platform.Y}_{(int)platform.Type}_{platform.Size};");
                     writer.WriteLine($"\tfield Platform platform{i};");
-                }
+                }*/
 
                 writer.WriteLine($"\tfield Array Obstacles;");
-                for (int i = 0; i < Obstacles.Count; i++)
+                /*for (int i = 0; i < Obstacles.Count; i++)
                 {
                     //writer.WriteLine($"\tfield Obstacle obstacle_{obstacle.X}_{obstacle.Y}_{(int)obstacle.Type}_{obstacle.Size};");
                     writer.WriteLine($"\tfield Obstacle obstacle{i};");
-                }
+                }*/
+
+                writer.WriteLine($"\tfield Array Enemies;");
+                /*for (int i = 0; i < Enemies.Count; i++)
+                {
+                    //writer.WriteLine($"\tfield Obstacle obstacle_{obstacle.X}_{obstacle.Y}_{(int)obstacle.Type}_{obstacle.Size};");
+                    writer.WriteLine($"\tfield Enemy enemy{i};");
+                }*/
+
+                writer.WriteLine($"\tfield Array Collectables;");
+                /*for (int i = 0; i < Collectables.Count; i++)
+                {
+                    //writer.WriteLine($"\tfield Obstacle obstacle_{obstacle.X}_{obstacle.Y}_{(int)obstacle.Type}_{obstacle.Size};");
+                    writer.WriteLine($"\tfield Collectable collectable{i};");
+                }*/
 
                 /*writer.WriteLine($"\tfield Array sections;");
                 for (int i = 0; i < Sections.Count; i++)
@@ -477,6 +546,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine($"\t\tlet character = Character.new({Character.X}, {Character.Y - 24});");
                 writer.WriteLine($"\t\tlet PlatformsCount = {Platforms.Count};");
                 writer.WriteLine($"\t\tlet ObstaclesCount = {Obstacles.Count};");
+                writer.WriteLine($"\t\tlet EnemiesCount = {Enemies.Count};");
+                writer.WriteLine($"\t\tlet CollectablesCount = {Collectables.Count};");
                 //writer.WriteLine($"\t\tlet sections_num = {Sections.Count};");
                 //writer.WriteLine($"\t\tlet level_width = {levelWidth};");
                 //writer.WriteLine($"\t\tlet section_width = {sectionWidth};");
@@ -490,75 +561,40 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 if (Platforms.Count != 0)
                     writer.WriteLine($"\t\tlet Platforms = Array.new({Platforms.Count});");
 
-                /*foreach (var platform in Platforms)
-                {
-                    writer.WriteLine($"\t\tlet platform_{platform.X}_{platform.Y}_{(int)platform.Type}_{platform.Size} = Platform.new({platform.X}, {platform.Y}, {(int)platform.Type}, {platform.Size});");
-                }*/
-
                 for (int i = 0; i < Platforms.Count; i++)
                 {
-                    writer.WriteLine($"\t\tlet platform{i} = Platform.new({Platforms[i].X}, {Platforms[i].Y}, {(int)Platforms[i].Type}, {Platforms[i].Size});");
+                    writer.WriteLine($"\t\tlet Platforms[{i}] = Platform.new({Platforms[i].X}, {Platforms[i].Y}, {(int)Platforms[i].Type}, {Platforms[i].Size});");
                 }
 
-                for (int i = 0; i < Platforms.Count; i++)
-                {
-                    writer.WriteLine($"\t\tlet Platforms[{i}] = platform{i};");
-                }
 
                 if (Obstacles.Count != 0)
                     writer.WriteLine($"\t\tlet Obstacles = Array.new({Obstacles.Count});");
 
-                /*foreach (var obstacle in Obstacles)
-                {
-                    writer.WriteLine($"\t\tlet obstacle_{obstacle.X}_{obstacle.Y}_{(int)obstacle.Type}_{obstacle.Size} = Obstacle.new({obstacle.X}, {obstacle.Y}, {(int)obstacle.Type}, {obstacle.Height}, {obstacle.Size});");
-                }*/
-
                 for (int i = 0; i < Obstacles.Count; i++)
                 {
-                    writer.WriteLine($"\t\tlet obstacle{i} = Obstacle.new({Obstacles[i].X}, {Obstacles[i].Y}, {(int)Obstacles[i].Type}, {Obstacles[i].Height}, {Obstacles[i].Size});");
-                }
-
-                for (int i = 0; i < Obstacles.Count; i++)
-                {
-                    writer.WriteLine($"\t\tlet Obstacles[{i}] = obstacle{i};");
+                    writer.WriteLine($"\t\tlet Obstacles[{i}] = Obstacle.new({Obstacles[i].X}, {Obstacles[i].Y}, {(int)Obstacles[i].Type}, {Obstacles[i].Height}, {Obstacles[i].Size});");
                 }
 
 
+                if (Enemies.Count != 0)
+                    writer.WriteLine($"\t\tlet Enemies = Array.new({Enemies.Count});");
 
-
-                /*for (int i = 0; i < Sections.Count; i++)
+                for (int i = 0; i < Enemies.Count; i++)
                 {
-                    //writer.WriteLine($"\t\tlet platform_section{i} = Array.new(platform_section_sizes[{i}]);");
+                    writer.WriteLine($"\t\tlet Enemies[{i}] = Enemy.new({Enemies[i].X}, {Enemies[i].Y}, {(int)Enemies[i].Type});");
+                }
 
-                    writer.WriteLine($"\t\tlet section{i} = Section.new({Sections[i].LeftBorder}, {Sections[i].RightBorder}, {Sections[i].Platforms.Count}, {Sections[i].Obstacles.Count});");
 
-                    if (Sections[i].Platforms.Count != 0)
-                    {
-                        writer.WriteLine($"\t\tlet section{i}platforms = Array.new({Sections[i].Platforms.Count});");
+                if (Collectables.Count != 0)
+                    writer.WriteLine($"\t\tlet Collectables = Array.new({Collectables.Count});");
 
-                        for (int j = 0; j < Sections[i].Platforms.Count; j++)
-                        {
-                            writer.WriteLine($"\t\tlet section{i}platforms[{j}] = platform_{Sections[i].Platforms[j].X}_{Sections[i].Platforms[j].Y}_{(int)Sections[i].Platforms[j].Type}_{Sections[i].Platforms[j].Size};");
-                        }
+                for (int i = 0; i < Collectables.Count; i++)
+                {
+                    writer.WriteLine($"\t\tlet Collectables[{i}] = Collectable.new({Collectables[i].X}, {Collectables[i].Y}, {(int)Collectables[i].Type});");
+                }
 
-                        writer.WriteLine($"\t\tdo section{i}.set_platforms(section{i}platforms);");
-                    }
 
-                    if (Sections[i].Obstacles.Count != 0)
-                    {
-                        writer.WriteLine($"\t\tlet section{i}obstacles = Array.new({Sections[i].Obstacles.Count});");
 
-                        for (int j = 0; j < Sections[i].Obstacles.Count; j++)
-                        {
-                            writer.WriteLine($"\t\tlet section{i}obstacles[{j}] = obstacle_{Sections[i].Obstacles[j].X}_{Sections[i].Obstacles[j].Y}_{(int)Sections[i].Obstacles[j].Type}_{Sections[i].Obstacles[j].Size};");
-                        }
-
-                        writer.WriteLine($"\t\tdo section{i}.set_obstacles(section{i}obstacles);");
-                    }
-                    
-                    writer.WriteLine($"\t\tlet sections[{i}] = section{i};");
-
-                }*/
 
                 writer.WriteLine($"\t\tlet Map = Array.new({levelWidth});");
                 for (int i = 0; i < levelWidth; i++)
@@ -579,11 +615,15 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine("\t}");
                 writer.WriteLine("\tmethod int getPlatformsCount() { return PlatformsCount; }");
                 writer.WriteLine("\tmethod int getObstaclesCount() { return ObstaclesCount; }");
+                writer.WriteLine("\tmethod int getEnemiesCount() { return EnemiesCount; }");
+                writer.WriteLine("\tmethod int getCollectablesCount() { return CollectablesCount; }");
                 //writer.WriteLine("\tmethod int get_sections_num() { return sections_num; }");
                 //writer.WriteLine("\tmethod int getLevelWidth() { return LevelWidth; }");
                 //writer.WriteLine("\tmethod int get_section_width() { return section_width; }");
                 writer.WriteLine("\tmethod Array getPlatforms() { return Platforms; }");
                 writer.WriteLine("\tmethod Array getObstacles() { return Obstacles; }");
+                writer.WriteLine("\tmethod Array getEnemies() { return Enemies; }");
+                writer.WriteLine("\tmethod Array getCollectables() { return Collectables; }");
                 //writer.WriteLine("\tmethod Array get_sections() { return sections; }");
                 //writer.WriteLine("\tmethod Array get_section(int index) { return sections[index]; }");
                 writer.WriteLine("\tmethod Character getCharacter() { return character; }");

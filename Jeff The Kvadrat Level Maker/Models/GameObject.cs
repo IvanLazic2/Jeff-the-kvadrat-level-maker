@@ -28,6 +28,7 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
         Character,
         Enemy,
         Obstacle,
+        Collectable,
         Unknown
     }
 
@@ -66,25 +67,6 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
             return result;
         }
 
-        /*public static IGameObject CreateGameObject(int x, int y, GameObjectType type, int size = 0, int height = 0)
-        {
-            IGameObject result = new GameObject();
-
-            if (type == GameObjectType.SimpleGroundPlatform ||
-                type == GameObjectType.SimplePlatform)
-
-                result = new Platform(x, y, size, Platform.GetPlatformType(type));
-
-            else if (type == GameObjectType.SmallSpikes ||
-                     type == GameObjectType.MediumSpikes ||
-                     type == GameObjectType.WeirdSpikes ||
-                     type == GameObjectType.LargeSpikes ||
-                     type == GameObjectType.SpikedArea)
-
-                result = new Obstacle(x, y, Obstacle.GetObstacleType(type), size);
-
-            return result;
-        }*/
 
         public static GameObjectType GetGameObjectType(Color c)
         {
@@ -101,6 +83,12 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
 
             else if (Obstacle.GetObstacleTypeByColor(c) != ObstacleType.Unknown)
                 result = GameObjectType.Obstacle;
+
+            else if (Enemy.GetOEnemyTypeByColor(c) != EnemyType.Unknown)
+                result = GameObjectType.Enemy;
+
+            else if (Collectable.GetCollectableTypeByColor(c) != CollectableType.Unknown)
+                result = GameObjectType.Collectable;
 
             return result;
         }
