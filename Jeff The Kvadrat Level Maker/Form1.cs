@@ -607,7 +607,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
                     writer.WriteLine($"\t\tlet Map[{i}] = map{i};");
                 }
                 writer.WriteLine($"\t\tlet MapWidth = {levelWidth};");
-                writer.WriteLine($"\t\tlet MapHeight = {levelWidth};");
+                writer.WriteLine($"\t\tlet MapHeight = {levelHeight};");
 
 
 
