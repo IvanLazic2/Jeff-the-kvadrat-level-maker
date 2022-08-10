@@ -38,6 +38,16 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.SpiderPanel = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.LifePanel = new System.Windows.Forms.Panel();
+            this.CoinPanel = new System.Windows.Forms.Panel();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.BatPanel = new System.Windows.Forms.Panel();
+            this.label19 = new System.Windows.Forms.Label();
+            this.EvilJeffRangedPanel = new System.Windows.Forms.Panel();
+            this.EvilJeffMeleePanel = new System.Windows.Forms.Panel();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
@@ -70,16 +80,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label4 = new System.Windows.Forms.Label();
             this.fileNameTextBox = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.EvilJeffMeleePanel = new System.Windows.Forms.Panel();
-            this.label20 = new System.Windows.Forms.Label();
-            this.EvilJeffRangedPanel = new System.Windows.Forms.Panel();
-            this.label21 = new System.Windows.Forms.Label();
-            this.BatPanel = new System.Windows.Forms.Panel();
-            this.label22 = new System.Windows.Forms.Label();
-            this.CoinPanel = new System.Windows.Forms.Panel();
-            this.label23 = new System.Windows.Forms.Label();
-            this.LifePanel = new System.Windows.Forms.Panel();
+            this.spriteEditorButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -211,6 +212,96 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(260, 399);
             this.panel1.TabIndex = 8;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(26, 334);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(24, 13);
+            this.label23.TabIndex = 6;
+            this.label23.Text = "Life";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(26, 312);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(28, 13);
+            this.label22.TabIndex = 35;
+            this.label22.Text = "Coin";
+            // 
+            // LifePanel
+            // 
+            this.LifePanel.BackColor = System.Drawing.Color.DeepPink;
+            this.LifePanel.Location = new System.Drawing.Point(3, 334);
+            this.LifePanel.Name = "LifePanel";
+            this.LifePanel.Size = new System.Drawing.Size(16, 16);
+            this.LifePanel.TabIndex = 7;
+            this.LifePanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LifePanel_MouseClick);
+            // 
+            // CoinPanel
+            // 
+            this.CoinPanel.BackColor = System.Drawing.Color.Gold;
+            this.CoinPanel.Location = new System.Drawing.Point(3, 312);
+            this.CoinPanel.Name = "CoinPanel";
+            this.CoinPanel.Size = new System.Drawing.Size(16, 16);
+            this.CoinPanel.TabIndex = 36;
+            this.CoinPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CoinPanel_MouseClick);
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(142, 205);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(23, 13);
+            this.label21.TabIndex = 34;
+            this.label21.Text = "Bat";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(142, 183);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(77, 13);
+            this.label20.TabIndex = 32;
+            this.label20.Text = "Evil jeff ranged";
+            // 
+            // BatPanel
+            // 
+            this.BatPanel.BackColor = System.Drawing.Color.Salmon;
+            this.BatPanel.Location = new System.Drawing.Point(119, 205);
+            this.BatPanel.Name = "BatPanel";
+            this.BatPanel.Size = new System.Drawing.Size(16, 16);
+            this.BatPanel.TabIndex = 33;
+            this.BatPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.BatPanel_MouseClick);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(142, 161);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(75, 13);
+            this.label19.TabIndex = 30;
+            this.label19.Text = "Evil Jeff melee";
+            // 
+            // EvilJeffRangedPanel
+            // 
+            this.EvilJeffRangedPanel.BackColor = System.Drawing.Color.Maroon;
+            this.EvilJeffRangedPanel.Location = new System.Drawing.Point(119, 183);
+            this.EvilJeffRangedPanel.Name = "EvilJeffRangedPanel";
+            this.EvilJeffRangedPanel.Size = new System.Drawing.Size(16, 16);
+            this.EvilJeffRangedPanel.TabIndex = 31;
+            this.EvilJeffRangedPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.EvilJeffRangedPanel_MouseClick);
+            // 
+            // EvilJeffMeleePanel
+            // 
+            this.EvilJeffMeleePanel.BackColor = System.Drawing.Color.IndianRed;
+            this.EvilJeffMeleePanel.Location = new System.Drawing.Point(119, 161);
+            this.EvilJeffMeleePanel.Name = "EvilJeffMeleePanel";
+            this.EvilJeffMeleePanel.Size = new System.Drawing.Size(16, 16);
+            this.EvilJeffMeleePanel.TabIndex = 29;
+            this.EvilJeffMeleePanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.EvilJeffMeleePanel_MouseClick);
             // 
             // label15
             // 
@@ -499,101 +590,22 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.fileNameTextBox.Size = new System.Drawing.Size(115, 20);
             this.fileNameTextBox.TabIndex = 12;
             // 
-            // label19
+            // spriteEditorButton
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(142, 161);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(75, 13);
-            this.label19.TabIndex = 30;
-            this.label19.Text = "Evil Jeff melee";
-            // 
-            // EvilJeffMeleePanel
-            // 
-            this.EvilJeffMeleePanel.BackColor = System.Drawing.Color.IndianRed;
-            this.EvilJeffMeleePanel.Location = new System.Drawing.Point(119, 161);
-            this.EvilJeffMeleePanel.Name = "EvilJeffMeleePanel";
-            this.EvilJeffMeleePanel.Size = new System.Drawing.Size(16, 16);
-            this.EvilJeffMeleePanel.TabIndex = 29;
-            this.EvilJeffMeleePanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.EvilJeffMeleePanel_MouseClick);
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(142, 183);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(77, 13);
-            this.label20.TabIndex = 32;
-            this.label20.Text = "Evil jeff ranged";
-            // 
-            // EvilJeffRangedPanel
-            // 
-            this.EvilJeffRangedPanel.BackColor = System.Drawing.Color.Maroon;
-            this.EvilJeffRangedPanel.Location = new System.Drawing.Point(119, 183);
-            this.EvilJeffRangedPanel.Name = "EvilJeffRangedPanel";
-            this.EvilJeffRangedPanel.Size = new System.Drawing.Size(16, 16);
-            this.EvilJeffRangedPanel.TabIndex = 31;
-            this.EvilJeffRangedPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.EvilJeffRangedPanel_MouseClick);
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(142, 205);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(23, 13);
-            this.label21.TabIndex = 34;
-            this.label21.Text = "Bat";
-            // 
-            // BatPanel
-            // 
-            this.BatPanel.BackColor = System.Drawing.Color.Salmon;
-            this.BatPanel.Location = new System.Drawing.Point(119, 205);
-            this.BatPanel.Name = "BatPanel";
-            this.BatPanel.Size = new System.Drawing.Size(16, 16);
-            this.BatPanel.TabIndex = 33;
-            this.BatPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.BatPanel_MouseClick);
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(26, 312);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(28, 13);
-            this.label22.TabIndex = 35;
-            this.label22.Text = "Coin";
-            // 
-            // CoinPanel
-            // 
-            this.CoinPanel.BackColor = System.Drawing.Color.Gold;
-            this.CoinPanel.Location = new System.Drawing.Point(3, 312);
-            this.CoinPanel.Name = "CoinPanel";
-            this.CoinPanel.Size = new System.Drawing.Size(16, 16);
-            this.CoinPanel.TabIndex = 36;
-            this.CoinPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CoinPanel_MouseClick);
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(26, 334);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(24, 13);
-            this.label23.TabIndex = 6;
-            this.label23.Text = "Life";
-            // 
-            // LifePanel
-            // 
-            this.LifePanel.BackColor = System.Drawing.Color.DeepPink;
-            this.LifePanel.Location = new System.Drawing.Point(3, 334);
-            this.LifePanel.Name = "LifePanel";
-            this.LifePanel.Size = new System.Drawing.Size(16, 16);
-            this.LifePanel.TabIndex = 7;
-            this.LifePanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LifePanel_MouseClick);
+            this.spriteEditorButton.Location = new System.Drawing.Point(435, 415);
+            this.spriteEditorButton.Name = "spriteEditorButton";
+            this.spriteEditorButton.Size = new System.Drawing.Size(75, 23);
+            this.spriteEditorButton.TabIndex = 14;
+            this.spriteEditorButton.Text = "Sprite editor";
+            this.spriteEditorButton.UseVisualStyleBackColor = true;
+            this.spriteEditorButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.spriteEditorButton_MouseClick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.spriteEditorButton);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.fileNameTextBox);
             this.Controls.Add(this.flowLayoutPanel1);
@@ -664,6 +676,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Panel LifePanel;
         private System.Windows.Forms.Panel CoinPanel;
+        private System.Windows.Forms.Button spriteEditorButton;
     }
 }
 

@@ -84,14 +84,14 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
             int objectSize = 0;
             int objectXCoord = 0;
 
-            for (int j = 0; j < finishedImage.Height; j += 16)
+            for (int j = 0; j < finishedImage.Height - 1; j += 16)
             {
                 objectStart = false;
                 objectSize = 0;
 
-                for (int i = 0; i < finishedImage.Width; i += 16)
+                for (int i = 0; i < finishedImage.Width - 1; i += 16)
                 {
-                    Color c = finishedImage.GetPixel(i, j);
+                    Color c = finishedImage.GetPixel(i + 1, j + 1);
 
                     if (GetObstacleTypeByColor(c) == type)
                     {
@@ -109,7 +109,7 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
                     if (objectStart)
                         objectSize++;
 
-                    if ((!objectStart || i == finishedImage.Width - 16) && objectSize != 0)
+                    if ((!objectStart || i == finishedImage.Width - 16 - 1) && objectSize != 0)
                         gameObjects.Add(new Obstacle(objectXCoord / 16, j, type, objectSize));
 
                     if (!objectStart)

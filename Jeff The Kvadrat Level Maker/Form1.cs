@@ -22,6 +22,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
         Bitmap bmp;
         Pen pen;
+        Pen gridPen = Pens.Gray;
         Brush brush;
         Rectangle drawingRectangle;
 
@@ -37,19 +38,20 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
         int[,] Matrix;
 
+        Form2 Form2;
 
 
         public Form1()
         {
-            levelWidth = 128; // 32
+            levelWidth = 256; // 32
             levelHeight = 16; // 16
             gameScreenWidth = 32;
             sectionWidth = 4;
 
             InitializeComponent();
 
-            pictureBox1.Width = levelWidth * 16;
-            pictureBox1.Height = levelHeight * 16;
+            pictureBox1.Width = levelWidth * 16 + 1;
+            pictureBox1.Height = levelHeight * 16 + 1;
 
             bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             pictureBox1.Image = bmp;
@@ -60,6 +62,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             drawingRectangle = new Rectangle();
 
             clear();
+            makeGrid();
 
             Character = new Character(0, 0);
             //Platforms = new List<Platform>();
@@ -67,6 +70,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
             //Obstacles = new List<Obstacle>();
             Enemies = new List<Enemy>();
             Collectables = new List<Collectable>();
+
+            Form2 = new Form2(this);
         }
 
         private void clear()
@@ -82,6 +87,23 @@ namespace Jeff_The_Kvadrat_Level_Maker
             pictureBox1.Invalidate();
         }
 
+        private void makeGrid()
+        {
+            int numOfCells = pictureBox1.Width * pictureBox1.Height / 16;
+            int cellSize = 16;
+
+            using (Graphics g = Graphics.FromImage(pictureBox1.Image))
+            {
+                for (int i = 0; i < numOfCells; i++)
+                {
+                    // Vertical
+                    g.DrawLine(gridPen, i * cellSize, 0, i * cellSize, numOfCells * cellSize);
+                    // Horizontal
+                    g.DrawLine(gridPen, 0, i * cellSize, numOfCells * cellSize, i * cellSize);
+                }
+            }
+        }
+
         private void draw(MouseEventArgs e)
         {
             if (pictureBox1.Image == null)
@@ -92,10 +114,10 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
             using (Graphics g = Graphics.FromImage(pictureBox1.Image))
             {
-                drawingRectangle.X = 16 * (e.Location.X / 16);
-                drawingRectangle.Y = 16 * (e.Location.Y / 16);
-                drawingRectangle.Width = 15;
-                drawingRectangle.Height = 15;
+                drawingRectangle.X = 16 * (e.Location.X / 16) + 1;
+                drawingRectangle.Y = 16 * (e.Location.Y / 16) + 1;
+                drawingRectangle.Width = 15 - 1;
+                drawingRectangle.Height = 15 - 1;
 
                 if (e.Button == MouseButtons.Left)
                 {
@@ -145,6 +167,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 //pictureBox1.Image = null;
 
                 clear();
+
+                makeGrid();
 
                 Invalidate();
             }
@@ -290,11 +314,11 @@ namespace Jeff_The_Kvadrat_Level_Maker
             Enemies = new List<Enemy>();
             Collectables = new List<Collectable>();
 
-            for (int j = 0; j < finishedImage.Height; j += 16)
+            for (int j = 0; j < finishedImage.Height - 1; j += 16)
             {
-                for (int i = 0; i < finishedImage.Width; i += 16)
+                for (int i = 0; i < finishedImage.Width - 1; i += 16)
                 {
-                    Color c = finishedImage.GetPixel(i, j);
+                    Color c = finishedImage.GetPixel(i + 1, j + 1);
 
                     switch (GameObject.GetGameObjectType(c))
                     {
@@ -602,7 +626,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
                     writer.WriteLine($"\t\tlet map{i} = Array.new({levelHeight});");
                     for (int j = 0; j < levelHeight; j++)
                     {
-                        writer.WriteLine($"\t\tlet map{i}[{j}] = {Matrix[i, j]};");
+                        if (Matrix[i, j] != 0)
+                            writer.WriteLine($"\t\tlet map{i}[{j}] = {Matrix[i, j]};");
                     }
                     writer.WriteLine($"\t\tlet Map[{i}] = map{i};");
                 }
@@ -634,6 +659,12 @@ namespace Jeff_The_Kvadrat_Level_Maker
             }
         }
 
-        
+        private void spriteEditorButton_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (Form2 == null)
+                Form2 = new Form2(this);
+
+            Form2.ShowDialog();
+        }
     }
 }
