@@ -62,6 +62,7 @@
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\Collectable.cs" />
     <Compile Include="Models\Enemy.cs" />
+    <Compile Include="Models\Finish.cs" />
     <Compile Include="Models\Frame.cs" />
     <Compile Include="Models\GameObject.cs" />
     <Compile Include="Models\IGameObject.cs" />

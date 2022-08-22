@@ -13,10 +13,12 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
         public int Height { get; set; }
         public string Name { get; set; }
         public Bitmap Image { get; set; }
-        public Sprite Sprite { get; set; }
-        public Sprite SpriteMirrored { get; set; }
+        //public Sprite Sprite { get; set; }
+        //public Sprite SpriteMirrored { get; set; }
+        public List<int> Sprite { get; set; }
+        public List<int> SpriteMirrored { get; set; }
 
-        public Frame(int width, int height, string name, Bitmap image, Sprite sprite, Sprite spriteMirrored)
+        public Frame(int width, int height, string name, Bitmap image, List<int> sprite, List<int> spriteMirrored)
         {
             Width = width;
             Height = height;

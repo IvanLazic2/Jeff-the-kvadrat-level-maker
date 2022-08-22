@@ -29,6 +29,7 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
         Enemy,
         Obstacle,
         Collectable,
+        Finish,
         Unknown
     }
 
@@ -89,6 +90,9 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
 
             else if (Collectable.GetCollectableTypeByColor(c) != CollectableType.Unknown)
                 result = GameObjectType.Collectable;
+
+            else if (c.R == 0 && c.G == 128 && c.B == 0) // green
+                result = GameObjectType.Finish;
 
             return result;
         }

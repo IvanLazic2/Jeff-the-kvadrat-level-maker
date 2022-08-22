@@ -11,6 +11,7 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
     {
         Coin,
         Life,
+        Ammo,
         Unknown
     }
 
@@ -35,6 +36,8 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
                 result = CollectableType.Coin;
             else if (c.R == 255 && c.G == 20 && c.B == 147) // deep pink
                 result = CollectableType.Life;
+            else if (c.R == 128 && c.G == 0 && c.B == 128) // purple
+                result = CollectableType.Ammo;
 
             return result;
         }

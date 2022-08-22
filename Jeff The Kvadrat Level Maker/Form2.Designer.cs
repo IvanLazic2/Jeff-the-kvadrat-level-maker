@@ -50,6 +50,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.spriteNameTextBox = new System.Windows.Forms.TextBox();
             this.deleteButton = new System.Windows.Forms.Button();
             this.mirrorButton = new System.Windows.Forms.Button();
+            this.hasMirroredCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
@@ -259,7 +260,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // mirrorButton
             // 
             this.mirrorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.mirrorButton.Location = new System.Drawing.Point(12, 726);
+            this.mirrorButton.Location = new System.Drawing.Point(103, 720);
             this.mirrorButton.Name = "mirrorButton";
             this.mirrorButton.Size = new System.Drawing.Size(75, 23);
             this.mirrorButton.TabIndex = 11;
@@ -267,11 +268,25 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.mirrorButton.UseVisualStyleBackColor = true;
             this.mirrorButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mirrorButton_MouseClick);
             // 
+            // hasMirroredCheckBox
+            // 
+            this.hasMirroredCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.hasMirroredCheckBox.AutoSize = true;
+            this.hasMirroredCheckBox.Checked = true;
+            this.hasMirroredCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.hasMirroredCheckBox.Location = new System.Drawing.Point(12, 724);
+            this.hasMirroredCheckBox.Name = "hasMirroredCheckBox";
+            this.hasMirroredCheckBox.Size = new System.Drawing.Size(85, 17);
+            this.hasMirroredCheckBox.TabIndex = 12;
+            this.hasMirroredCheckBox.Text = "Has mirrored";
+            this.hasMirroredCheckBox.UseVisualStyleBackColor = true;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1278, 761);
+            this.Controls.Add(this.hasMirroredCheckBox);
             this.Controls.Add(this.mirrorButton);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -287,6 +302,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -312,5 +328,6 @@ namespace Jeff_The_Kvadrat_Level_Maker
         private System.Windows.Forms.Button mirrorButton;
         private System.Windows.Forms.NumericUpDown numericUpDown3;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox hasMirroredCheckBox;
     }
 }

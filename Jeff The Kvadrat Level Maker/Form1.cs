@@ -29,6 +29,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
         bool isMouseDown;
 
         Character Character;
+        Finish Finish;
         List<Section> Sections;
 
         List<Platform> Platforms;
@@ -306,6 +307,18 @@ namespace Jeff_The_Kvadrat_Level_Maker
             pen = Pens.DeepPink;
         }
 
+        private void AmmoPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            brush = Brushes.Purple;
+            pen = Pens.Purple;
+        }
+
+        private void FinishPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            brush = Brushes.Green;
+            pen = Pens.Green;
+        }
+
 
 
 
@@ -330,6 +343,9 @@ namespace Jeff_The_Kvadrat_Level_Maker
                             break;
                         case GameObjectType.Collectable:
                             Collectables.Add(new Collectable(i / 16, j, Collectable.GetCollectableTypeByColor(c)));
+                            break;
+                        case GameObjectType.Finish:
+                            Finish = new Finish(i / 16, j / 16);
                             break;
                         default:
                             break;
@@ -464,27 +480,42 @@ namespace Jeff_The_Kvadrat_Level_Maker
         {
             Matrix = new int[levelWidth, levelHeight];
 
-            int numOfPlatformTypes = 11;
+            int numOfPlatformTypes = 10;
             foreach (var platform in Platforms)
             {
-                for (int i = 0; i < platform.Size; i++)
+                if (platform.Type != PlatformType.Unknown)
                 {
-                    Matrix[platform.X + i, (int)(platform.Y / 16)] = (int)platform.Type + 1;
-                }
-            }
-
-            foreach (var obstacle in Obstacles)
-            {
-                for (int i = 0; i < obstacle.Size; i++)
-                {
-                    for (int j = 0; j < (int)((obstacle.Height + 16) / 16); j++)
+                    for (int i = 0; i < platform.Size; i++)
                     {
-                        Matrix[obstacle.X + i, (int)(obstacle.Y / 16) - j] = numOfPlatformTypes + (int)obstacle.Type;
+                        Matrix[platform.X + i, (int)(platform.Y / 16)] = (int)platform.Type + 1;
                     }
                 }
             }
 
-            // TODO: dodat collectables u matricu
+            int numOfObstacleTypes = 5;
+            foreach (var obstacle in Obstacles)
+            {
+                if (obstacle.Type != ObstacleType.Unknown)
+                {
+                    for (int i = 0; i < obstacle.Size; i++)
+                    {
+                        for (int j = 0; j < (int)((obstacle.Height + 16) / 16); j++)
+                        {
+                            Matrix[obstacle.X + i, (int)(obstacle.Y / 16) - j] = numOfPlatformTypes + (int)obstacle.Type + 1;
+                        }
+                    }
+                }
+                
+            }
+
+            int numOfCollectableTypes = 3;
+            foreach (var collectable in Collectables)
+            {
+                if (collectable.Type != CollectableType.Unknown)
+                {
+                    Matrix[collectable.X, (int)(collectable.Y / 16)] = numOfPlatformTypes + numOfObstacleTypes + (int)collectable.Type + 1;
+                }
+            }
         }
 
 
@@ -498,9 +529,13 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
             using (StreamWriter writer = new StreamWriter(fullPath))
             {
+                if (Finish == null)
+                    Finish = new Finish(levelWidth - 1, 14);
+
                 writer.WriteLine($"class {levelName}");
                 writer.WriteLine("{");
                 writer.WriteLine("\tfield Character character;");
+                writer.WriteLine("\tfield Finish finish;");
 
                 writer.WriteLine("\tfield int PlatformsCount;");
                 writer.WriteLine("\tfield int ObstaclesCount;");
@@ -558,16 +593,17 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 }*/
 
                 writer.WriteLine($"\tfield Array Map;");
-                for (int i = 0; i < levelWidth; i++)
+                /*for (int i = 0; i < levelWidth; i++)
                 {
                     writer.WriteLine($"\tfield Array map{i};");
-                }
+                }*/
                 writer.WriteLine($"\tfield int MapWidth;");
                 writer.WriteLine($"\tfield int MapHeight;");
 
                 writer.WriteLine($"\tconstructor {levelName} new()");
                 writer.WriteLine("\t{");
                 writer.WriteLine($"\t\tlet character = Character.new({Character.X}, {Character.Y - 24});");
+                writer.WriteLine($"\t\tlet finish = Finish.new({Finish.X}, {Finish.Y * 16});");
                 writer.WriteLine($"\t\tlet PlatformsCount = {Platforms.Count};");
                 writer.WriteLine($"\t\tlet ObstaclesCount = {Obstacles.Count};");
                 writer.WriteLine($"\t\tlet EnemiesCount = {Enemies.Count};");
@@ -620,8 +656,18 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
 
 
-                writer.WriteLine($"\t\tlet Map = Array.new({levelWidth});");
-                for (int i = 0; i < levelWidth; i++)
+                writer.WriteLine($"\t\tlet Map = Array.new({levelWidth * levelHeight});");
+
+                var tempMatrix = Matrix.Cast<int>().ToArray();
+                for (int i = 0; i < levelWidth * levelHeight; i++)
+                {
+                    if (tempMatrix[i] != 0)
+                    {
+                        writer.WriteLine($"\t\tlet Map[{i}] = {tempMatrix[i]};");
+                    }   
+                }
+
+                /*for (int i = 0; i < levelWidth; i++)
                 {
                     writer.WriteLine($"\t\tlet map{i} = Array.new({levelHeight});");
                     for (int j = 0; j < levelHeight; j++)
@@ -630,7 +676,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
                             writer.WriteLine($"\t\tlet map{i}[{j}] = {Matrix[i, j]};");
                     }
                     writer.WriteLine($"\t\tlet Map[{i}] = map{i};");
-                }
+                }*/
                 writer.WriteLine($"\t\tlet MapWidth = {levelWidth};");
                 writer.WriteLine($"\t\tlet MapHeight = {levelHeight};");
 
@@ -652,6 +698,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 //writer.WriteLine("\tmethod Array get_sections() { return sections; }");
                 //writer.WriteLine("\tmethod Array get_section(int index) { return sections[index]; }");
                 writer.WriteLine("\tmethod Character getCharacter() { return character; }");
+                writer.WriteLine("\tmethod int getFinish() { return finish; }");
                 writer.WriteLine("\tmethod Array getMap() { return Map; }");
                 writer.WriteLine("\tmethod int getMapWidth() { return MapWidth; }");
                 writer.WriteLine("\tmethod int getMapHeight() { return MapHeight; }");
@@ -666,5 +713,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
             Form2.ShowDialog();
         }
+
+        
     }
 }

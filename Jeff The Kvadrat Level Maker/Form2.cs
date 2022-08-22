@@ -169,7 +169,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             isMouseDown = false;
         }
 
-        private Sprite generateSpriteFromImage(Bitmap finishedImage)
+        /*private Sprite generateSpriteFromImage2(Bitmap finishedImage)
         {
             //int[,] sprite = new int[(finishedImage.Width - 1) / 256, (finishedImage.Height - 1) / 256];
 
@@ -205,9 +205,81 @@ namespace Jeff_The_Kvadrat_Level_Maker
             }
 
             return sprite;
+        }*/
+
+        private int blockRowToInt(int[] blockRow)
+        {
+            //get grid binary representation
+            string binary = "";
+            for (int i = 0; i < 16; i++)
+            {
+                if (blockRow[i] == 1)
+                    binary = "1" + binary;
+                else
+                    binary = "0" + binary;
+            }
+
+            bool isNegative = false;
+            //if number is negative, get its  one's complement
+            if (binary[0] == '1')
+            {
+                isNegative = true;
+                string oneComplement = "";
+                for (int k = 0; k < 16; k++)
+                {
+                    if (binary[k] == '1')
+                        oneComplement = oneComplement + "0";
+                    else
+                        oneComplement = oneComplement + "1";
+                }
+                binary = oneComplement;
+            }
+
+            //calculate one's complement decimal value
+            int value = 0;
+            for (int k = 0; k < 16; k++)
+            {
+                value = value * 2;
+                if (binary[k] == '1')
+                    value = value + 1;
+            }
+
+            //two's complement value if it is a negative value
+            if (isNegative == true)
+                value = -(value + 1);
+
+
+            return value;
         }
 
-        private void generateFrames(Bitmap finishedImage, Sprite sprite, Sprite spriteMirrored)
+        private List<int> generateSpriteFromImage(Bitmap finishedImage)
+        {
+            List<int> blockRows = new List<int>();
+
+            for (int i = ((finishedImage.Height - 1) / 16) - 1; i >= 0; i--)
+            {
+                for (int j = 0; j < (finishedImage.Width - 1) / 256; j++)
+                {
+                    int[] blockRow = new int[16];
+
+                    for (int k = 0; k < 16; k++)
+                    {
+                        Color c = finishedImage.GetPixel(((j * 256) + (k * 16)) + 1, (i * 16) + 1);
+
+                        if (c.R == 0 && c.G == 0 && c.B == 0)
+                        {
+                            blockRow[k] = 1;
+                        }
+                    }
+
+                    blockRows.Add(blockRowToInt(blockRow));
+                }
+            }
+
+            return blockRows;
+        }
+
+        private void generateFrames(Bitmap finishedImage, List<int> sprite, List<int> spriteMirrored)
         {
             string frameName = frameNameTextBox.Text;
             Frame frame = null;
@@ -236,7 +308,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             }
             else
             {
-                frame = new Frame(sprite.Width, sprite.Height, frameName, finishedImage, sprite, spriteMirrored);
+                frame = new Frame((int)numericUpDown1.Value / 16, (int)numericUpDown2.Value / 16, frameName, finishedImage, sprite, spriteMirrored);
                 Frames.Add(frame);
 
                 imageList1.Images.Add(frame.Image);
@@ -267,8 +339,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
         private void saveButton_MouseClick(object sender, MouseEventArgs e)
         {
-            Sprite sprite;
-            Sprite spriteMirrored;
+            List<int> sprite;
+            List<int> spriteMirrored;
 
             Bitmap finishedImage = new Bitmap(pictureBox1.Image);
 
@@ -355,15 +427,24 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 }
 
                 writer.WriteLine("\tstatic Array Frames;");
-                writer.WriteLine("\tstatic Array FramesMirrored;");
+                writer.WriteLine("\tstatic int FrameSize;");
+                if (hasMirroredCheckBox.Checked)
+                {
+                    writer.WriteLine("\tstatic Array FramesMirrored;");
+                }
+
 
                 for (int i = 0; i < Frames.Count; i++)
                 {
                     writer.WriteLine($"\tstatic Array {Frames[i].Name};");
-                    writer.WriteLine($"\tstatic Array {Frames[i].Name}Mirrored;");
+                    if (hasMirroredCheckBox.Checked)
+                    {
+                        writer.WriteLine($"\tstatic Array {Frames[i].Name}Mirrored;");
+                    }
+
                 }
 
-                for (int i = 0; i < Frames.Count; i++)
+                /*for (int i = 0; i < Frames.Count; i++)
                 {
                     Sprite sprite = Frames[i].Sprite;
                     for (int j = 0; j < sprite.Height; j++)
@@ -377,10 +458,10 @@ namespace Jeff_The_Kvadrat_Level_Maker
                             writer.WriteLine($"\tstatic Array {Frames[i].Name}Part{j}{l}Mirrored;");
                         }
                     }
-                }
+                }*/
 
 
-                
+
 
 
                 writer.WriteLine($"\tfunction void init()");
@@ -398,17 +479,101 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
                 writer.WriteLine("//////////////////////////////////////////");
 
-                writer.WriteLine($"\t\tlet Width = {Frames[0].Width};");
-                writer.WriteLine($"\t\tlet Height = {Frames[0].Height};");
+                writer.WriteLine($"\t\tlet Width = {(int)numericUpDown1.Value / 16};");
+                writer.WriteLine($"\t\tlet Height = {(int)numericUpDown2.Value / 16};");
 
                 writer.WriteLine($"\t\tlet AnimationFramesCount = {numberOfAnimationFrames};");
                 writer.WriteLine($"\t\tlet SpecialFramesCount = {Frames.Count - numberOfAnimationFrames};");
                 writer.WriteLine($"\t\tlet TotalFramesCount = {Frames.Count};");
 
+                writer.WriteLine($"\t\tlet FrameSize = Width * Height * 16;");
                 writer.WriteLine($"\t\tlet Frames = Array.new(TotalFramesCount);");
-                writer.WriteLine($"\t\tlet FramesMirrored = Array.new(TotalFramesCount);");
+                if (hasMirroredCheckBox.Checked)
+                {
+                    writer.WriteLine($"\t\tlet FramesMirrored = Array.new(TotalFramesCount);");
+                }
+
 
                 for (int i = 0; i < Frames.Count; i++)
+                {
+                    List<int> sprite = Frames[i].Sprite;
+                    List<int> spriteMirrored = Frames[i].SpriteMirrored;
+
+                    writer.WriteLine($"\t\tlet {Frames[i].Name} = Array.new(Width * Height * 16);");
+                    if (hasMirroredCheckBox.Checked)
+                    {
+                        writer.WriteLine($"\t\tlet {Frames[i].Name}Mirrored = Array.new(Width * Height * 16);");
+                    }
+
+
+
+                    /*var spritePartsFlattened = sprite.Array.Cast<SpritePart>().ToArray();
+                    var spritePartsFlattenedMirrored = spriteMirrored.Array.Cast<SpritePart>().ToArray();
+                    var convertedArraysFlattened = new List<int[]>();
+                    var convertedArraysFlattenedMirrored = new List<int[]>();
+                    foreach (var sp in spritePartsFlattened)
+                    {
+                        convertedArraysFlattened.Add(sp.ConvertedArray);
+                    }
+                    foreach (var sp in spritePartsFlattenedMirrored)
+                    {
+                        convertedArraysFlattenedMirrored.Add(sp.ConvertedArray);
+                    }
+
+                    var spriteFlattened = new int[Frames[0].Width * Frames[0].Height * 16];
+                    var spriteFlattenedMirrored = new int[Frames[0].Width * Frames[0].Height * 16];
+                    for (int j = 0; j < convertedArraysFlattened.Count(); j++)
+                    {
+                        for (int k = 0; k < 16; k++)
+                        {
+                            spriteFlattened[j * 16 + k] = convertedArraysFlattened[j][k];
+                        }
+                    }
+                    for (int j = 0; j < convertedArraysFlattenedMirrored.Count(); j++)
+                    {
+                        for (int k = 0; k < 16; k++)
+                        {
+                            spriteFlattenedMirrored[j * 16 + k] = convertedArraysFlattenedMirrored[j][k];
+                        }
+                    }*/
+
+                    for (int j = 0; j < sprite.Count; j++)
+                    {
+                        if (sprite[j] != 0)
+                        {
+                            if (sprite[j] == -32768)
+                                writer.WriteLine($"\t\tlet {Frames[0].Name}[{j}] = ~32767;");
+                            else
+                                writer.WriteLine($"\t\tlet {Frames[0].Name}[{j}] = {sprite[j]};");
+                        }
+                    }
+                    if (hasMirroredCheckBox.Checked)
+                    {
+                        for (int j = 0; j < spriteMirrored.Count; j++)
+                        {
+                            if (spriteMirrored[j] != 0)
+                            {
+                                if (spriteMirrored[j] == -32768)
+                                    writer.WriteLine($"\t\tlet {Frames[0].Name}Mirrored[{j}] = ~32767;");
+                                else
+                                    writer.WriteLine($"\t\tlet {Frames[0].Name}Mirrored[{j}] = {spriteMirrored[j]};");
+                            }
+                        }
+                    }
+
+                    writer.WriteLine($"\t\tlet Frames[{i}] = {Frames[i].Name};");
+                    if (hasMirroredCheckBox.Checked)
+                    {
+                        writer.WriteLine($"\t\tlet FramesMirrored[{i}] = {Frames[i].Name}Mirrored;");
+                    }
+
+                }
+
+
+
+
+
+                /*for (int i = 0; i < Frames.Count; i++)
                 {
                     Sprite sprite = Frames[i].Sprite;
                     Sprite spriteMirrored = Frames[i].SpriteMirrored;
@@ -465,7 +630,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
                     writer.WriteLine($"\t\tlet Frames[{i}] = {Frames[i].Name};");
                     writer.WriteLine($"\t\tlet FramesMirrored[{i}] = {Frames[i].Name}Mirrored;");
-                }
+                }*/
 
                 writer.WriteLine("\t\treturn;");
                 writer.WriteLine("\t}");
@@ -481,6 +646,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
                     writer.WriteLine("\t}");
                 }
 
+                writer.WriteLine("\tfunction int getWidth() { return Width; }");
+                writer.WriteLine("\tfunction int getHeight() { return Height; }");
 
                 writer.WriteLine("\tfunction void CheckTimers()");
                 writer.WriteLine("\t{");
@@ -520,18 +687,30 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine("\t\treturn;");
                 writer.WriteLine("\t}");
 
-                writer.WriteLine("\tfunction void DrawFrame(int memAddress, bool display, bool mirrored, int x, int y)");
-                writer.WriteLine("\t{");
-                writer.WriteLine("\t\tif (mirrored)");
-                writer.WriteLine("\t\t{");
-                writer.WriteLine("\t\t\tdo Sprite.Draw(memAddress, FramesMirrored[currFrame], Width, Height, display, x, y);");
-                writer.WriteLine("\t\t}");
-                writer.WriteLine("\t\telse");
-                writer.WriteLine("\t\t{");
-                writer.WriteLine("\t\t\tdo Sprite.Draw(memAddress, Frames[currFrame], Width, Height, display, x, y);");
-                writer.WriteLine("\t\t}");
-                writer.WriteLine("\t\treturn;");
-                writer.WriteLine("\t}");
+                if (hasMirroredCheckBox.Checked)
+                {
+                    writer.WriteLine("\tfunction void DrawFrame(int memAddress, bool display, bool mirrored, int x, int y)");
+                    writer.WriteLine("\t{");
+                    writer.WriteLine("\t\tif (mirrored)");
+                    writer.WriteLine("\t\t{");
+                    writer.WriteLine("\t\t\tdo Sprite.Draw(memAddress, FramesMirrored[currFrame], FrameSize, Width, Height, display, x, y);");
+                    writer.WriteLine("\t\t}");
+                    writer.WriteLine("\t\telse");
+                    writer.WriteLine("\t\t{");
+                    writer.WriteLine("\t\t\tdo Sprite.Draw(memAddress, Frames[currFrame], FrameSize, Width, Height, display, x, y);");
+                    writer.WriteLine("\t\t}");
+                    writer.WriteLine("\t\treturn;");
+                    writer.WriteLine("\t}");
+                }
+                else
+                {
+                    writer.WriteLine("\tfunction void DrawFrame(int memAddress, bool display, int x, int y)");
+                    writer.WriteLine("\t{");
+                    writer.WriteLine("\t\tdo Sprite.Draw(memAddress, Frames[currFrame], FrameSize, Width, Height, display, x, y);");
+                    writer.WriteLine("\t\treturn;");
+                    writer.WriteLine("\t}");
+                }
+                
 
 
 

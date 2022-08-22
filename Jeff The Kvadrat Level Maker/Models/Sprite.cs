@@ -10,14 +10,15 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
     {
         public int Width { get; set; }
         public int Height { get; set; }
-        public SpritePart[,] Array { get; set; }
+        //public SpritePart[,] Array { get; set; }
+        public List<int> BlockRows { get; set; }
 
         public Sprite(int width, int height)
         {
             Width = width;
             Height = height;
 
-            Array = new SpritePart[height, width];
+            //Array = new SpritePart[height, width];
         }
     }
 }

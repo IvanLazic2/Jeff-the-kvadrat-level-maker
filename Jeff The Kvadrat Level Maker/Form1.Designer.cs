@@ -81,6 +81,10 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.label4 = new System.Windows.Forms.Label();
             this.fileNameTextBox = new System.Windows.Forms.TextBox();
             this.spriteEditorButton = new System.Windows.Forms.Button();
+            this.label24 = new System.Windows.Forms.Label();
+            this.AmmoPanel = new System.Windows.Forms.Panel();
+            this.label25 = new System.Windows.Forms.Label();
+            this.FinishPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -129,7 +133,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 272);
+            this.label2.Location = new System.Drawing.Point(142, 270);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 13);
             this.label2.TabIndex = 4;
@@ -138,7 +142,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // CharacterPanel
             // 
             this.CharacterPanel.BackColor = System.Drawing.Color.Blue;
-            this.CharacterPanel.Location = new System.Drawing.Point(3, 272);
+            this.CharacterPanel.Location = new System.Drawing.Point(119, 270);
             this.CharacterPanel.Name = "CharacterPanel";
             this.CharacterPanel.Size = new System.Drawing.Size(16, 16);
             this.CharacterPanel.TabIndex = 5;
@@ -164,7 +168,11 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label25);
+            this.panel1.Controls.Add(this.label24);
+            this.panel1.Controls.Add(this.FinishPanel);
             this.panel1.Controls.Add(this.label23);
+            this.panel1.Controls.Add(this.AmmoPanel);
             this.panel1.Controls.Add(this.label22);
             this.panel1.Controls.Add(this.LifePanel);
             this.panel1.Controls.Add(this.CoinPanel);
@@ -216,7 +224,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(26, 334);
+            this.label23.Location = new System.Drawing.Point(26, 295);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(24, 13);
             this.label23.TabIndex = 6;
@@ -225,7 +233,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(26, 312);
+            this.label22.Location = new System.Drawing.Point(26, 273);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(28, 13);
             this.label22.TabIndex = 35;
@@ -234,7 +242,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // LifePanel
             // 
             this.LifePanel.BackColor = System.Drawing.Color.DeepPink;
-            this.LifePanel.Location = new System.Drawing.Point(3, 334);
+            this.LifePanel.Location = new System.Drawing.Point(3, 295);
             this.LifePanel.Name = "LifePanel";
             this.LifePanel.Size = new System.Drawing.Size(16, 16);
             this.LifePanel.TabIndex = 7;
@@ -243,7 +251,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // CoinPanel
             // 
             this.CoinPanel.BackColor = System.Drawing.Color.Gold;
-            this.CoinPanel.Location = new System.Drawing.Point(3, 312);
+            this.CoinPanel.Location = new System.Drawing.Point(3, 273);
             this.CoinPanel.Name = "CoinPanel";
             this.CoinPanel.Size = new System.Drawing.Size(16, 16);
             this.CoinPanel.TabIndex = 36;
@@ -600,6 +608,42 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.spriteEditorButton.UseVisualStyleBackColor = true;
             this.spriteEditorButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.spriteEditorButton_MouseClick);
             // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(26, 317);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(36, 13);
+            this.label24.TabIndex = 8;
+            this.label24.Text = "Ammo";
+            // 
+            // AmmoPanel
+            // 
+            this.AmmoPanel.BackColor = System.Drawing.Color.Purple;
+            this.AmmoPanel.Location = new System.Drawing.Point(3, 317);
+            this.AmmoPanel.Name = "AmmoPanel";
+            this.AmmoPanel.Size = new System.Drawing.Size(16, 16);
+            this.AmmoPanel.TabIndex = 9;
+            this.AmmoPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AmmoPanel_MouseClick);
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(142, 296);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(34, 13);
+            this.label25.TabIndex = 15;
+            this.label25.Text = "Finish";
+            // 
+            // FinishPanel
+            // 
+            this.FinishPanel.BackColor = System.Drawing.Color.Green;
+            this.FinishPanel.Location = new System.Drawing.Point(119, 295);
+            this.FinishPanel.Name = "FinishPanel";
+            this.FinishPanel.Size = new System.Drawing.Size(16, 16);
+            this.FinishPanel.TabIndex = 16;
+            this.FinishPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FinishPanel_MouseClick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -677,6 +721,10 @@ namespace Jeff_The_Kvadrat_Level_Maker
         private System.Windows.Forms.Panel LifePanel;
         private System.Windows.Forms.Panel CoinPanel;
         private System.Windows.Forms.Button spriteEditorButton;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Panel FinishPanel;
+        private System.Windows.Forms.Panel AmmoPanel;
     }
 }
 
