@@ -44,7 +44,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
         public Form1()
         {
-            levelWidth = 256; // 32
+            levelWidth = 128; // 32
             levelHeight = 16; // 16
             gameScreenWidth = 32;
             sectionWidth = 4;
@@ -602,21 +602,13 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
                 writer.WriteLine($"\tconstructor {levelName} new()");
                 writer.WriteLine("\t{");
+                writer.WriteLine("\t\tvar int i;");
                 writer.WriteLine($"\t\tlet character = Character.new({Character.X}, {Character.Y - 24});");
                 writer.WriteLine($"\t\tlet finish = Finish.new({Finish.X}, {Finish.Y * 16});");
                 writer.WriteLine($"\t\tlet PlatformsCount = {Platforms.Count};");
                 writer.WriteLine($"\t\tlet ObstaclesCount = {Obstacles.Count};");
                 writer.WriteLine($"\t\tlet EnemiesCount = {Enemies.Count};");
                 writer.WriteLine($"\t\tlet CollectablesCount = {Collectables.Count};");
-                //writer.WriteLine($"\t\tlet sections_num = {Sections.Count};");
-                //writer.WriteLine($"\t\tlet level_width = {levelWidth};");
-                //writer.WriteLine($"\t\tlet section_width = {sectionWidth};");
-                //writer.WriteLine($"\t\tlet sections = Array.new(sections_num);");
-                //writer.WriteLine($"\t\tlet platform_section_sizes = Array.new(platform_sections_num);");
-                //for (int i = 0; i < Sectionsizes.Count; i++)
-                //{
-                //    writer.WriteLine($"\t\tlet platform_section_sizes[{i}] = {Sectionsizes[i]};");
-                //}
 
                 if (Platforms.Count != 0)
                     writer.WriteLine($"\t\tlet Platforms = Array.new({Platforms.Count});");
@@ -654,9 +646,16 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 }
 
 
+                writer.WriteLine($"\t\tlet MapWidth = {levelWidth};");
+                writer.WriteLine($"\t\tlet MapHeight = {levelHeight};");
 
+                writer.WriteLine($"\t\tlet Map = Array.new(MapWidth * MapHeight);");
 
-                writer.WriteLine($"\t\tlet Map = Array.new({levelWidth * levelHeight});");
+                writer.WriteLine("\t\twhile (i < (MapWidth * MapHeight))");
+                writer.WriteLine("\t\t{");
+                writer.WriteLine("\t\t\tlet Map[i] = 0;");
+                writer.WriteLine("\t\t\tlet i = i + 1;");
+                writer.WriteLine("\t\t}");
 
                 var tempMatrix = Matrix.Cast<int>().ToArray();
                 for (int i = 0; i < levelWidth * levelHeight; i++)
@@ -667,18 +666,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
                     }   
                 }
 
-                /*for (int i = 0; i < levelWidth; i++)
-                {
-                    writer.WriteLine($"\t\tlet map{i} = Array.new({levelHeight});");
-                    for (int j = 0; j < levelHeight; j++)
-                    {
-                        if (Matrix[i, j] != 0)
-                            writer.WriteLine($"\t\tlet map{i}[{j}] = {Matrix[i, j]};");
-                    }
-                    writer.WriteLine($"\t\tlet Map[{i}] = map{i};");
-                }*/
-                writer.WriteLine($"\t\tlet MapWidth = {levelWidth};");
-                writer.WriteLine($"\t\tlet MapHeight = {levelHeight};");
+                
 
 
 
@@ -688,20 +676,82 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine("\tmethod int getObstaclesCount() { return ObstaclesCount; }");
                 writer.WriteLine("\tmethod int getEnemiesCount() { return EnemiesCount; }");
                 writer.WriteLine("\tmethod int getCollectablesCount() { return CollectablesCount; }");
-                //writer.WriteLine("\tmethod int get_sections_num() { return sections_num; }");
-                //writer.WriteLine("\tmethod int getLevelWidth() { return LevelWidth; }");
-                //writer.WriteLine("\tmethod int get_section_width() { return section_width; }");
                 writer.WriteLine("\tmethod Array getPlatforms() { return Platforms; }");
                 writer.WriteLine("\tmethod Array getObstacles() { return Obstacles; }");
                 writer.WriteLine("\tmethod Array getEnemies() { return Enemies; }");
                 writer.WriteLine("\tmethod Array getCollectables() { return Collectables; }");
-                //writer.WriteLine("\tmethod Array get_sections() { return sections; }");
-                //writer.WriteLine("\tmethod Array get_section(int index) { return sections[index]; }");
                 writer.WriteLine("\tmethod Character getCharacter() { return character; }");
                 writer.WriteLine("\tmethod int getFinish() { return finish; }");
                 writer.WriteLine("\tmethod Array getMap() { return Map; }");
                 writer.WriteLine("\tmethod int getMapWidth() { return MapWidth; }");
                 writer.WriteLine("\tmethod int getMapHeight() { return MapHeight; }");
+
+                writer.WriteLine("\tmethod void dispose()");
+                writer.WriteLine("\t{");
+
+                writer.WriteLine("\t\tvar int i;");
+                writer.WriteLine("\t\tvar Platform platform;");
+                writer.WriteLine("\t\tvar Obstacle obstacle;");
+                writer.WriteLine("\t\tvar Enemy enemy;");
+                writer.WriteLine("\t\tvar Collectable collectable;");
+
+                writer.WriteLine("\t\tdo character.dispose();");
+                writer.WriteLine("\t\tdo finish.dispose();");
+
+                writer.WriteLine("\t\twhile (i < PlatformsCount)");
+                writer.WriteLine("\t\t{");
+                writer.WriteLine("\t\t\tlet platform = Platforms[i];");
+                writer.WriteLine("\t\t\tdo platform.dispose();");
+                writer.WriteLine("\t\t\tlet i = i + 1;");
+                writer.WriteLine("\t\t}");
+
+                writer.WriteLine("\t\tlet i = 0;");
+                writer.WriteLine("\t\twhile (i < ObstaclesCount)");
+                writer.WriteLine("\t\t{");
+                writer.WriteLine("\t\t\tlet obstacle = Obstacles[i];");
+                writer.WriteLine("\t\t\tdo obstacle.dispose();");
+                writer.WriteLine("\t\t\tlet i = i + 1;");
+                writer.WriteLine("\t\t}");
+
+                writer.WriteLine("\t\tlet i = 0;");
+                writer.WriteLine("\t\twhile (i < EnemiesCount)");
+                writer.WriteLine("\t\t{");
+                writer.WriteLine("\t\t\tlet enemy = Enemies[i];");
+                writer.WriteLine("\t\t\tdo enemy.dispose();");
+                writer.WriteLine("\t\t\tlet i = i + 1;");
+                writer.WriteLine("\t\t}");
+
+                writer.WriteLine("\t\tlet i = 0;");
+                writer.WriteLine("\t\twhile (i < CollectablesCount)");
+                writer.WriteLine("\t\t{");
+                writer.WriteLine("\t\t\tlet collectable = Collectables[i];");
+                writer.WriteLine("\t\t\tdo collectable.dispose();");
+                writer.WriteLine("\t\t\tlet i = i + 1;");
+                writer.WriteLine("\t\t}");
+                writer.WriteLine("\t\tif (~(PlatformsCount = 0))");
+                writer.WriteLine("\t\t{");
+                writer.WriteLine("\t\t\tdo Platforms.dispose();");
+                writer.WriteLine("\t\t}");
+                writer.WriteLine("\t\tif (~(ObstaclesCount = 0))");
+                writer.WriteLine("\t\t{");
+                writer.WriteLine("\t\t\tdo Obstacles.dispose();");
+                writer.WriteLine("\t\t}");
+                writer.WriteLine("\t\tif (~(EnemiesCount = 0))");
+                writer.WriteLine("\t\t{");
+                writer.WriteLine("\t\t\tdo Enemies.dispose();");
+                writer.WriteLine("\t\t}");
+                writer.WriteLine("\t\tif (~(CollectablesCount = 0))");
+                writer.WriteLine("\t\t{");
+                writer.WriteLine("\t\t\tdo Collectables.dispose();");
+                writer.WriteLine("\t\t}");
+
+                writer.WriteLine("\t\tdo Map.dispose();");
+                writer.WriteLine("\t\tdo Memory.deAlloc(this);");
+                writer.WriteLine("\treturn;");
+                writer.WriteLine("\t}");
+
+                
+
                 writer.WriteLine("}");
             }
         }

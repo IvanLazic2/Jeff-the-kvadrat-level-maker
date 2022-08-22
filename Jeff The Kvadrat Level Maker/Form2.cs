@@ -542,9 +542,9 @@ namespace Jeff_The_Kvadrat_Level_Maker
                         if (sprite[j] != 0)
                         {
                             if (sprite[j] == -32768)
-                                writer.WriteLine($"\t\tlet {Frames[0].Name}[{j}] = ~32767;");
+                                writer.WriteLine($"\t\tlet {Frames[i].Name}[{j}] = ~32767;");
                             else
-                                writer.WriteLine($"\t\tlet {Frames[0].Name}[{j}] = {sprite[j]};");
+                                writer.WriteLine($"\t\tlet {Frames[i].Name}[{j}] = {sprite[j]};");
                         }
                     }
                     if (hasMirroredCheckBox.Checked)
@@ -554,9 +554,9 @@ namespace Jeff_The_Kvadrat_Level_Maker
                             if (spriteMirrored[j] != 0)
                             {
                                 if (spriteMirrored[j] == -32768)
-                                    writer.WriteLine($"\t\tlet {Frames[0].Name}Mirrored[{j}] = ~32767;");
+                                    writer.WriteLine($"\t\tlet {Frames[i].Name}Mirrored[{j}] = ~32767;");
                                 else
-                                    writer.WriteLine($"\t\tlet {Frames[0].Name}Mirrored[{j}] = {spriteMirrored[j]};");
+                                    writer.WriteLine($"\t\tlet {Frames[i].Name}Mirrored[{j}] = {spriteMirrored[j]};");
                             }
                         }
                     }
