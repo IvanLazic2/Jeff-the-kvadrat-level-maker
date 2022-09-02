@@ -45,7 +45,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
         public Form1()
         {
             levelWidth = 128; // 32
-            levelHeight = 16; // 16
+            levelHeight = 7; // 16
             gameScreenWidth = 32;
             sectionWidth = 4;
 
@@ -603,7 +603,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine($"\tconstructor {levelName} new()");
                 writer.WriteLine("\t{");
                 writer.WriteLine("\t\tvar int i;");
-                writer.WriteLine($"\t\tlet character = Character.new({Character.X}, {Character.Y - 24});");
+                writer.WriteLine($"\t\tlet character = Character.new({Character.X}, {Character.Y}, false);");
                 writer.WriteLine($"\t\tlet finish = Finish.new({Finish.X}, {Finish.Y * 16});");
                 writer.WriteLine($"\t\tlet PlatformsCount = {Platforms.Count};");
                 writer.WriteLine($"\t\tlet ObstaclesCount = {Obstacles.Count};");
@@ -696,56 +696,85 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine("\t\tvar Collectable collectable;");
 
                 writer.WriteLine("\t\tdo character.dispose();");
+                writer.WriteLine("\t\tlet character = 0;");
                 writer.WriteLine("\t\tdo finish.dispose();");
+                writer.WriteLine("\t\tlet finish = 0;");
 
                 writer.WriteLine("\t\twhile (i < PlatformsCount)");
                 writer.WriteLine("\t\t{");
                 writer.WriteLine("\t\t\tlet platform = Platforms[i];");
                 writer.WriteLine("\t\t\tdo platform.dispose();");
+                writer.WriteLine("\t\t\tlet platform = 0;");
                 writer.WriteLine("\t\t\tlet i = i + 1;");
                 writer.WriteLine("\t\t}");
+                writer.WriteLine("\t\tlet PlatformsCount = 0;");
 
                 writer.WriteLine("\t\tlet i = 0;");
                 writer.WriteLine("\t\twhile (i < ObstaclesCount)");
                 writer.WriteLine("\t\t{");
                 writer.WriteLine("\t\t\tlet obstacle = Obstacles[i];");
                 writer.WriteLine("\t\t\tdo obstacle.dispose();");
+                writer.WriteLine("\t\t\tlet obstacle = 0");
                 writer.WriteLine("\t\t\tlet i = i + 1;");
                 writer.WriteLine("\t\t}");
+                writer.WriteLine("\t\tlet ObstaclesCount = 0;");
 
                 writer.WriteLine("\t\tlet i = 0;");
                 writer.WriteLine("\t\twhile (i < EnemiesCount)");
                 writer.WriteLine("\t\t{");
                 writer.WriteLine("\t\t\tlet enemy = Enemies[i];");
                 writer.WriteLine("\t\t\tdo enemy.dispose();");
+                writer.WriteLine("\t\t\tlet enemy = 0;");
                 writer.WriteLine("\t\t\tlet i = i + 1;");
                 writer.WriteLine("\t\t}");
+                writer.WriteLine("\t\tlet EnemiesCount = 0;");
 
                 writer.WriteLine("\t\tlet i = 0;");
                 writer.WriteLine("\t\twhile (i < CollectablesCount)");
                 writer.WriteLine("\t\t{");
                 writer.WriteLine("\t\t\tlet collectable = Collectables[i];");
                 writer.WriteLine("\t\t\tdo collectable.dispose();");
+                writer.WriteLine("\t\t\tlet collectable = 0;");
                 writer.WriteLine("\t\t\tlet i = i + 1;");
                 writer.WriteLine("\t\t}");
+                writer.WriteLine("\t\tlet CollectablesCount = 0;");
+
                 writer.WriteLine("\t\tif (~(PlatformsCount = 0))");
                 writer.WriteLine("\t\t{");
                 writer.WriteLine("\t\t\tdo Platforms.dispose();");
                 writer.WriteLine("\t\t}");
+                writer.WriteLine("\t\tlet Platforms = 0;");
+
                 writer.WriteLine("\t\tif (~(ObstaclesCount = 0))");
                 writer.WriteLine("\t\t{");
                 writer.WriteLine("\t\t\tdo Obstacles.dispose();");
                 writer.WriteLine("\t\t}");
+                writer.WriteLine("\t\tlet Obstacles = 0;");
+
                 writer.WriteLine("\t\tif (~(EnemiesCount = 0))");
                 writer.WriteLine("\t\t{");
                 writer.WriteLine("\t\t\tdo Enemies.dispose();");
                 writer.WriteLine("\t\t}");
+                writer.WriteLine("\t\tlet Enemies = 0;");
+
                 writer.WriteLine("\t\tif (~(CollectablesCount = 0))");
                 writer.WriteLine("\t\t{");
                 writer.WriteLine("\t\t\tdo Collectables.dispose();");
                 writer.WriteLine("\t\t}");
+                writer.WriteLine("\t\tlet Collectables = 0;");
+
+                writer.WriteLine("\t\tlet i = 0;");
+                writer.WriteLine("\t\twhile (i < (MapWidth * MapHeight))");
+                writer.WriteLine("\t\t{");
+                writer.WriteLine("\t\t\tlet Map[i] = 0;");
+                writer.WriteLine("\t\t\tlet i = i + 1;");
+                writer.WriteLine("\t\t}");
 
                 writer.WriteLine("\t\tdo Map.dispose();");
+                writer.WriteLine("\t\tlet Map = 0;");
+                writer.WriteLine("\t\tlet MapWidth = 0;");
+                writer.WriteLine("\t\tlet MapHeight = 0;");
+
                 writer.WriteLine("\t\tdo Memory.deAlloc(this);");
                 writer.WriteLine("\treturn;");
                 writer.WriteLine("\t}");
