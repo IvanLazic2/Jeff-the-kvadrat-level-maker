@@ -13,6 +13,7 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
         EvilJeffMelee,
         EvilJeffRanged,
         Bat,
+        Shooter,
         Unknown
     }
 
@@ -45,6 +46,9 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
                 result = EnemyType.EvilJeffRanged;
             else if (c.R == 250 && c.G == 128 && c.B == 114) // salmon
                 result = EnemyType.Bat;
+            else if (c.R == 139 && c.G == 0 && c.B == 0) // dark red
+                result = EnemyType.Shooter;
+
 
             return result;
         }

@@ -45,7 +45,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
         public Form1()
         {
             levelWidth = 128; // 32
-            levelHeight = 7; // 16
+            levelHeight = 16; // 16
             gameScreenWidth = 32;
             sectionWidth = 4;
 
@@ -317,6 +317,12 @@ namespace Jeff_The_Kvadrat_Level_Maker
         {
             brush = Brushes.Green;
             pen = Pens.Green;
+        }
+
+        private void ShooterPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            brush = Brushes.DarkRed;
+            pen = Pens.DarkRed;
         }
 
 
@@ -603,7 +609,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine($"\tconstructor {levelName} new()");
                 writer.WriteLine("\t{");
                 writer.WriteLine("\t\tvar int i;");
-                writer.WriteLine($"\t\tlet character = Character.new({Character.X}, {Character.Y}, false);");
+                writer.WriteLine($"\t\tlet character = Character.new({Character.X}, {Character.Y - 24}, false);");
                 writer.WriteLine($"\t\tlet finish = Finish.new({Finish.X}, {Finish.Y * 16});");
                 writer.WriteLine($"\t\tlet PlatformsCount = {Platforms.Count};");
                 writer.WriteLine($"\t\tlet ObstaclesCount = {Obstacles.Count};");
@@ -714,7 +720,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine("\t\t{");
                 writer.WriteLine("\t\t\tlet obstacle = Obstacles[i];");
                 writer.WriteLine("\t\t\tdo obstacle.dispose();");
-                writer.WriteLine("\t\t\tlet obstacle = 0");
+                writer.WriteLine("\t\t\tlet obstacle = 0;");
                 writer.WriteLine("\t\t\tlet i = i + 1;");
                 writer.WriteLine("\t\t}");
                 writer.WriteLine("\t\tlet ObstaclesCount = 0;");
@@ -776,7 +782,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine("\t\tlet MapHeight = 0;");
 
                 writer.WriteLine("\t\tdo Memory.deAlloc(this);");
-                writer.WriteLine("\treturn;");
+                writer.WriteLine("\t\treturn;");
                 writer.WriteLine("\t}");
 
                 
