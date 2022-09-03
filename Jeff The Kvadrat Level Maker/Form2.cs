@@ -406,25 +406,25 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine("\tstatic int Height;");
 
                 writer.WriteLine("\tstatic int AnimationFramesCount;");
-                writer.WriteLine("\tstatic int SpecialFramesCount;");
-                writer.WriteLine("\tstatic int TotalFramesCount;");
+                //writer.WriteLine("\tstatic int SpecialFramesCount;");
+                //writer.WriteLine("\tstatic int TotalFramesCount;");
 
-                writer.WriteLine("\tstatic bool stopAnimation;");
+                //writer.WriteLine("\tstatic bool stopAnimation;");
 
                 writer.WriteLine("\tstatic int currFrame;");
                 writer.WriteLine("\tstatic int animationTimer;");
                 writer.WriteLine("\tstatic int animationDelay;");
-                writer.WriteLine("\tstatic int specialFrameTimer;");
+                //writer.WriteLine("\tstatic int specialFrameTimer;");
 
-                for (int i = numberOfAnimationFrames; i < Frames.Count; i++)
+                /*for (int i = numberOfAnimationFrames; i < Frames.Count; i++)
                 {
                     writer.WriteLine($"\tstatic int {Frames[i].Name}Duration;");
-                }
+                }*/
 
-                for (int i = numberOfAnimationFrames; i < Frames.Count; i++)
+                /*for (int i = numberOfAnimationFrames; i < Frames.Count; i++)
                 {
                     writer.WriteLine($"\tstatic int {Frames[i].Name}Index;");
-                }
+                }*/
 
                 writer.WriteLine("\tstatic Array Frames;");
                 writer.WriteLine("\tstatic int FrameSize;");
@@ -444,25 +444,6 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
                 }
 
-                /*for (int i = 0; i < Frames.Count; i++)
-                {
-                    Sprite sprite = Frames[i].Sprite;
-                    for (int j = 0; j < sprite.Height; j++)
-                    {
-                        writer.WriteLine($"\tstatic Array {Frames[i].Name}Row{j};");
-                        writer.WriteLine($"\tstatic Array {Frames[i].Name}Row{j}Mirrored;");
-
-                        for (int l = 0; l < sprite.Width; l++)
-                        {
-                            writer.WriteLine($"\tstatic Array {Frames[i].Name}Part{j}{l};");
-                            writer.WriteLine($"\tstatic Array {Frames[i].Name}Part{j}{l}Mirrored;");
-                        }
-                    }
-                }*/
-
-
-
-
 
                 writer.WriteLine($"\tfunction void init()");
                 writer.WriteLine("\t{");
@@ -472,25 +453,28 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 if (Frames.Count > 1)
                     writer.WriteLine($"\t\tlet animationDelay = 3;");
 
-                for (int i = numberOfAnimationFrames; i < Frames.Count; i++)
+                /*for (int i = numberOfAnimationFrames; i < Frames.Count; i++)
                 {
                     writer.WriteLine($"\t\tlet {Frames[i].Name}Duration = 10;");
-                }
+                }*/
 
                 writer.WriteLine("//////////////////////////////////////////");
 
-                writer.WriteLine($"\t\tlet Width = {(int)numericUpDown1.Value / 16};");
-                writer.WriteLine($"\t\tlet Height = {(int)numericUpDown2.Value / 16};");
+                var width = (int)numericUpDown1.Value / 16;
+                var height = (int)numericUpDown2.Value / 16;
+
+                writer.WriteLine($"\t\tlet Width = {width};");
+                writer.WriteLine($"\t\tlet Height = {height};");
 
                 writer.WriteLine($"\t\tlet AnimationFramesCount = {numberOfAnimationFrames};");
-                writer.WriteLine($"\t\tlet SpecialFramesCount = {Frames.Count - numberOfAnimationFrames};");
-                writer.WriteLine($"\t\tlet TotalFramesCount = {Frames.Count};");
+                //writer.WriteLine($"\t\tlet SpecialFramesCount = {Frames.Count - numberOfAnimationFrames};");
+                //writer.WriteLine($"\t\tlet TotalFramesCount = {Frames.Count};");
 
-                writer.WriteLine($"\t\tlet FrameSize = Width * Height * 16;");
-                writer.WriteLine($"\t\tlet Frames = Array.new(TotalFramesCount);");
+                writer.WriteLine($"\t\tlet FrameSize = {width * height * 16};");
+                writer.WriteLine($"\t\tlet Frames = Array.new(AnimationFramesCount);");
                 if (hasMirroredCheckBox.Checked)
                 {
-                    writer.WriteLine($"\t\tlet FramesMirrored = Array.new(TotalFramesCount);");
+                    writer.WriteLine($"\t\tlet FramesMirrored = Array.new(AnimationFramesCount);");
                 }
 
 
@@ -499,52 +483,20 @@ namespace Jeff_The_Kvadrat_Level_Maker
                     List<int> sprite = Frames[i].Sprite;
                     List<int> spriteMirrored = Frames[i].SpriteMirrored;
 
-                    writer.WriteLine($"\t\tlet {Frames[i].Name} = Array.new(Width * Height * 16);");
+                    writer.WriteLine($"\t\tlet {Frames[i].Name} = Array.new({width * height * 16});");
                     if (hasMirroredCheckBox.Checked)
                     {
-                        writer.WriteLine($"\t\tlet {Frames[i].Name}Mirrored = Array.new(Width * Height * 16);");
+                        writer.WriteLine($"\t\tlet {Frames[i].Name}Mirrored = Array.new({width * height * 16});");
                     }
-
-
-
-                    /*var spritePartsFlattened = sprite.Array.Cast<SpritePart>().ToArray();
-                    var spritePartsFlattenedMirrored = spriteMirrored.Array.Cast<SpritePart>().ToArray();
-                    var convertedArraysFlattened = new List<int[]>();
-                    var convertedArraysFlattenedMirrored = new List<int[]>();
-                    foreach (var sp in spritePartsFlattened)
-                    {
-                        convertedArraysFlattened.Add(sp.ConvertedArray);
-                    }
-                    foreach (var sp in spritePartsFlattenedMirrored)
-                    {
-                        convertedArraysFlattenedMirrored.Add(sp.ConvertedArray);
-                    }
-
-                    var spriteFlattened = new int[Frames[0].Width * Frames[0].Height * 16];
-                    var spriteFlattenedMirrored = new int[Frames[0].Width * Frames[0].Height * 16];
-                    for (int j = 0; j < convertedArraysFlattened.Count(); j++)
-                    {
-                        for (int k = 0; k < 16; k++)
-                        {
-                            spriteFlattened[j * 16 + k] = convertedArraysFlattened[j][k];
-                        }
-                    }
-                    for (int j = 0; j < convertedArraysFlattenedMirrored.Count(); j++)
-                    {
-                        for (int k = 0; k < 16; k++)
-                        {
-                            spriteFlattenedMirrored[j * 16 + k] = convertedArraysFlattenedMirrored[j][k];
-                        }
-                    }*/
 
                     for (int j = 0; j < sprite.Count; j++)
                     {
                         if (sprite[j] != 0)
                         {
                             if (sprite[j] == -32768)
-                                writer.WriteLine($"\t\tlet {Frames[i].Name}[{j}] = ~32767;");
+                                writer.WriteLine($"\t\tdo MemoryExt.poke({Frames[i].Name}, {j}, ~32767);");
                             else
-                                writer.WriteLine($"\t\tlet {Frames[i].Name}[{j}] = {sprite[j]};");
+                                writer.WriteLine($"\t\tdo MemoryExt.poke({Frames[i].Name}, {j}, {sprite[j]});");
                         }
                     }
                     if (hasMirroredCheckBox.Checked)
@@ -554,83 +506,20 @@ namespace Jeff_The_Kvadrat_Level_Maker
                             if (spriteMirrored[j] != 0)
                             {
                                 if (spriteMirrored[j] == -32768)
-                                    writer.WriteLine($"\t\tlet {Frames[i].Name}Mirrored[{j}] = ~32767;");
+                                    writer.WriteLine($"\t\tdo MemoryExt.poke({Frames[i].Name}Mirrored, {j}, ~32767);");
                                 else
-                                    writer.WriteLine($"\t\tlet {Frames[i].Name}Mirrored[{j}] = {spriteMirrored[j]};");
+                                    writer.WriteLine($"\t\tdo MemoryExt.poke({Frames[i].Name}Mirrored, {j}, {spriteMirrored[j]});");
                             }
                         }
                     }
 
-                    writer.WriteLine($"\t\tlet Frames[{i}] = {Frames[i].Name};");
+                    writer.WriteLine($"\t\tdo MemoryExt.poke(Frames, {i}, {Frames[i].Name});");
                     if (hasMirroredCheckBox.Checked)
                     {
-                        writer.WriteLine($"\t\tlet FramesMirrored[{i}] = {Frames[i].Name}Mirrored;");
+                        writer.WriteLine($"\t\tdo MemoryExt.poke(FramesMirrored, {i}, {Frames[i].Name}Mirrored);");
                     }
 
                 }
-
-
-
-
-
-                /*for (int i = 0; i < Frames.Count; i++)
-                {
-                    Sprite sprite = Frames[i].Sprite;
-                    Sprite spriteMirrored = Frames[i].SpriteMirrored;
-
-                    writer.WriteLine($"\t\tlet {Frames[i].Name} = Array.new(Height);");
-                    writer.WriteLine($"\t\tlet {Frames[i].Name}Mirrored = Array.new(Height);");
-
-                    for (int j = 0; j < Frames[0].Height; j++)
-                    {
-                        writer.WriteLine($"\t\tlet {Frames[i].Name}Row{j} = Array.new(Width);");
-                        writer.WriteLine($"\t\tlet {Frames[i].Name}Row{j}Mirrored = Array.new(Width);");
-
-                        for (int k = 0; k < Frames[0].Width; k++)
-                        {
-                            SpritePart spritePart = sprite.Array[j, k];
-                            SpritePart spritePartMirrored = spriteMirrored.Array[j, k];
-
-                            if (spritePart.IsEmpty())
-                            {
-                                writer.WriteLine($"\t\tlet {Frames[i].Name}Part{j}{k} = Sprite.getEmpty();");
-                                writer.WriteLine($"\t\tlet {Frames[i].Name}Part{j}{k}Mirrored = Sprite.getEmpty();");
-                            }
-                            else
-                            {
-                                writer.WriteLine($"\t\tlet {Frames[i].Name}Part{j}{k} = Array.new(16);");
-                                writer.WriteLine($"\t\tlet {Frames[i].Name}Part{j}{k}Mirrored = Array.new(16);");
-
-                                for (int l = 0; l < 16; l++)
-                                {
-                                    if (spritePart.ConvertedArray[l] != 0)
-                                        if (spritePart.ConvertedArray[l] == -32768)
-                                            writer.WriteLine($"\t\tlet {Frames[i].Name}Part{j}{k}[{l}] = ~32767;");
-                                        else
-                                            writer.WriteLine($"\t\tlet {Frames[i].Name}Part{j}{k}[{l}] = {spritePart.ConvertedArray[l]};");
-                                }
-                                for (int l = 0; l < 16; l++)
-                                {
-                                    if (spritePartMirrored.ConvertedArray[l] != 0)
-                                        if (spritePartMirrored.ConvertedArray[l] == -32768)
-                                            writer.WriteLine($"\t\tlet {Frames[i].Name}Part{j}{k}Mirrored[{l}] = ~32767;");
-                                        else
-                                            writer.WriteLine($"\t\tlet {Frames[i].Name}Part{j}{k}Mirrored[{l}] = {spritePartMirrored.ConvertedArray[l]};");
-                                }
-                                    
-                            }
-
-                            writer.WriteLine($"\t\tlet {Frames[i].Name}Row{j}[{k}] = {Frames[i].Name}Part{j}{k};");
-                            writer.WriteLine($"\t\tlet {Frames[i].Name}Row{j}Mirrored[{k}] = {Frames[i].Name}Part{j}{k}Mirrored;");
-                        }
-
-                        writer.WriteLine($"\t\tlet {Frames[i].Name}[{j}] = {Frames[i].Name}Row{j};");
-                        writer.WriteLine($"\t\tlet {Frames[i].Name}Mirrored[{j}] = {Frames[i].Name}Row{j}Mirrored;");
-                    }
-
-                    writer.WriteLine($"\t\tlet Frames[{i}] = {Frames[i].Name};");
-                    writer.WriteLine($"\t\tlet FramesMirrored[{i}] = {Frames[i].Name}Mirrored;");
-                }*/
 
                 writer.WriteLine("\t\treturn;");
                 writer.WriteLine("\t}");
@@ -649,43 +538,43 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine("\tfunction int getWidth() { return Width; }");
                 writer.WriteLine("\tfunction int getHeight() { return Height; }");
 
-                writer.WriteLine("\tfunction void CheckTimers()");
-                writer.WriteLine("\t{");
-                writer.WriteLine("\t\tif (animationTimer < 1)");
-                writer.WriteLine("\t\t{");
-                writer.WriteLine($"\t\t\tdo {spriteName}.ChangeFrame();");
-                writer.WriteLine("\t\t\tlet animationTimer = animationDelay;");
-                writer.WriteLine("\t\t}");
-                writer.WriteLine("\t\tif (specialFrameTimer < 1)");
-                writer.WriteLine("\t\t{");
-                writer.WriteLine("\t\t\tlet stopAnimation = false;");
-                writer.WriteLine("\t\t\tlet specialFrameTimer = 0;");
-                writer.WriteLine("\t\t}");
-                writer.WriteLine("\t\treturn;");
-                writer.WriteLine("\t}");
+                if (numberOfAnimationFrames != 1)
+                {
+                    writer.WriteLine("\tfunction void CheckTimers()");
+                    writer.WriteLine("\t{");
+                    writer.WriteLine("\t\tif (animationTimer < 1)");
+                    writer.WriteLine("\t\t{");
+                    writer.WriteLine($"\t\t\tdo {spriteName}.ChangeFrame();");
+                    writer.WriteLine("\t\t\tlet animationTimer = animationDelay;");
+                    writer.WriteLine("\t\t}");
+                    /*writer.WriteLine("\t\tif (specialFrameTimer < 1)");
+                    writer.WriteLine("\t\t{");
+                    writer.WriteLine("\t\t\tlet stopAnimation = false;");
+                    writer.WriteLine("\t\t\tlet specialFrameTimer = 0;");
+                    writer.WriteLine("\t\t}");*/
+                    writer.WriteLine("\t\treturn;");
+                    writer.WriteLine("\t}");
 
-                writer.WriteLine("\tfunction void DecrementTimers()");
-                writer.WriteLine("\t{");
-                writer.WriteLine("\t\tlet animationTimer = animationTimer - 1;");
-                writer.WriteLine("\t\tlet specialFrameTimer = specialFrameTimer - 1;");
-                writer.WriteLine("\t\treturn;");
-                writer.WriteLine("\t}");
+                    writer.WriteLine("\tfunction void DecrementTimers()");
+                    writer.WriteLine("\t{");
+                    writer.WriteLine("\t\tlet animationTimer = animationTimer - 1;");
+                    //writer.WriteLine("\t\tlet specialFrameTimer = specialFrameTimer - 1;");
+                    writer.WriteLine("\t\treturn;");
+                    writer.WriteLine("\t}");
 
-                writer.WriteLine("\tfunction void ChangeFrame()");
-                writer.WriteLine("\t{");
-                writer.WriteLine("\t\tif (~(stopAnimation | (AnimationFramesCount = 0)))");
-                writer.WriteLine("\t\t{");
-                writer.WriteLine("\t\t\tif (currFrame < (AnimationFramesCount - 1))");
-                writer.WriteLine("\t\t\t{");
-                writer.WriteLine("\t\t\t\tlet currFrame = currFrame + 1;");
-                writer.WriteLine("\t\t\t}");
-                writer.WriteLine("\t\t\telse");
-                writer.WriteLine("\t\t\t{");
-                writer.WriteLine("\t\t\t\tlet currFrame = 0;");
-                writer.WriteLine("\t\t\t}");
-                writer.WriteLine("\t\t}");
-                writer.WriteLine("\t\treturn;");
-                writer.WriteLine("\t}");
+                    writer.WriteLine("\tfunction void ChangeFrame()");
+                    writer.WriteLine("\t{");
+                    writer.WriteLine("\t\tif (currFrame < (AnimationFramesCount - 1))");
+                    writer.WriteLine("\t\t{");
+                    writer.WriteLine("\t\t\tlet currFrame = currFrame + 1;");
+                    writer.WriteLine("\t\t}");
+                    writer.WriteLine("\t\telse");
+                    writer.WriteLine("\t\t{");
+                    writer.WriteLine("\t\t\tlet currFrame = 0;");
+                    writer.WriteLine("\t\t}");
+                    writer.WriteLine("\t\treturn;");
+                    writer.WriteLine("\t}");
+                }
 
                 if (hasMirroredCheckBox.Checked)
                 {
@@ -710,9 +599,6 @@ namespace Jeff_The_Kvadrat_Level_Maker
                     writer.WriteLine("\t\treturn;");
                     writer.WriteLine("\t}");
                 }
-                
-
-
 
                 writer.WriteLine("}");
             }

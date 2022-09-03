@@ -547,62 +547,14 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine("\tfield int ObstaclesCount;");
                 writer.WriteLine("\tfield int EnemiesCount;");
                 writer.WriteLine("\tfield int CollectablesCount;");
-                //writer.WriteLine("\tfield int sections_num;");
-
-                //writer.WriteLine("\tfield int LevelWidth;");
-                //writer.WriteLine("\tfield int section_width;");
-
-                //writer.WriteLine("\tfield Array section_sizes;");
 
                 writer.WriteLine($"\tfield Array Platforms;");
-                /*for (int i = 0; i < Platforms.Count; i++)
-                {
-                    //writer.WriteLine($"\tfield Platform platform_{platform.X}_{platform.Y}_{(int)platform.Type}_{platform.Size};");
-                    writer.WriteLine($"\tfield Platform platform{i};");
-                }*/
-
                 writer.WriteLine($"\tfield Array Obstacles;");
-                /*for (int i = 0; i < Obstacles.Count; i++)
-                {
-                    //writer.WriteLine($"\tfield Obstacle obstacle_{obstacle.X}_{obstacle.Y}_{(int)obstacle.Type}_{obstacle.Size};");
-                    writer.WriteLine($"\tfield Obstacle obstacle{i};");
-                }*/
-
                 writer.WriteLine($"\tfield Array Enemies;");
-                /*for (int i = 0; i < Enemies.Count; i++)
-                {
-                    //writer.WriteLine($"\tfield Obstacle obstacle_{obstacle.X}_{obstacle.Y}_{(int)obstacle.Type}_{obstacle.Size};");
-                    writer.WriteLine($"\tfield Enemy enemy{i};");
-                }*/
-
                 writer.WriteLine($"\tfield Array Collectables;");
-                /*for (int i = 0; i < Collectables.Count; i++)
-                {
-                    //writer.WriteLine($"\tfield Obstacle obstacle_{obstacle.X}_{obstacle.Y}_{(int)obstacle.Type}_{obstacle.Size};");
-                    writer.WriteLine($"\tfield Collectable collectable{i};");
-                }*/
-
-                /*writer.WriteLine($"\tfield Array sections;");
-                for (int i = 0; i < Sections.Count; i++)
-                {
-                    writer.WriteLine($"\tfield Section section{i};");
-                }
-                // PROVJERIT JEL PLATFORM COUNT > 0
-                for (int i = 0; i < Sections.Count; i++)
-                {
-                    writer.WriteLine($"\tfield Array section{i}platforms;");
-                }
-                // PROVJERIT JEL OBSTACLE COUNT > 0
-                for (int i = 0; i < Sections.Count; i++)
-                {
-                    writer.WriteLine($"\tfield Array section{i}obstacles;");
-                }*/
 
                 writer.WriteLine($"\tfield Array Map;");
-                /*for (int i = 0; i < levelWidth; i++)
-                {
-                    writer.WriteLine($"\tfield Array map{i};");
-                }*/
+
                 writer.WriteLine($"\tfield int MapWidth;");
                 writer.WriteLine($"\tfield int MapHeight;");
 
@@ -621,7 +573,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
                 for (int i = 0; i < Platforms.Count; i++)
                 {
-                    writer.WriteLine($"\t\tlet Platforms[{i}] = Platform.new({Platforms[i].X}, {Platforms[i].Y}, {(int)Platforms[i].Type}, {Platforms[i].Size});");
+                    writer.WriteLine($"\t\tdo MemoryExt.poke(Platforms, {i}, Platform.new({Platforms[i].X}, {Platforms[i].Y}, {(int)Platforms[i].Type}, {Platforms[i].Size}));");
                 }
 
 
@@ -630,34 +582,31 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
                 for (int i = 0; i < Obstacles.Count; i++)
                 {
-                    writer.WriteLine($"\t\tlet Obstacles[{i}] = Obstacle.new({Obstacles[i].X}, {Obstacles[i].Y}, {(int)Obstacles[i].Type}, {Obstacles[i].Height}, {Obstacles[i].Size});");
+                    writer.WriteLine($"\t\tdo MemoryExt.poke(Obstacles, {i}, Obstacle.new({Obstacles[i].X}, {Obstacles[i].Y}, {(int)Obstacles[i].Type}, {Obstacles[i].Height}, {Obstacles[i].Size}));");
                 }
-
 
                 if (Enemies.Count != 0)
                     writer.WriteLine($"\t\tlet Enemies = Array.new({Enemies.Count});");
 
                 for (int i = 0; i < Enemies.Count; i++)
                 {
-                    writer.WriteLine($"\t\tlet Enemies[{i}] = Enemy.new({Enemies[i].X}, {Enemies[i].Y}, {(int)Enemies[i].Type});");
+                    writer.WriteLine($"\t\tdo MemoryExt.poke(Enemies, {i}, Enemy.new({Enemies[i].X}, {Enemies[i].Y}, {(int)Enemies[i].Type}));");
                 }
-
 
                 if (Collectables.Count != 0)
                     writer.WriteLine($"\t\tlet Collectables = Array.new({Collectables.Count});");
 
                 for (int i = 0; i < Collectables.Count; i++)
                 {
-                    writer.WriteLine($"\t\tlet Collectables[{i}] = Collectable.new({Collectables[i].X}, {Collectables[i].Y}, {(int)Collectables[i].Type});");
+                    writer.WriteLine($"\t\tdo MemoryExt.poke(Collectables, {i}, Collectable.new({Collectables[i].X}, {Collectables[i].Y}, {(int)Collectables[i].Type}));");
                 }
-
 
                 writer.WriteLine($"\t\tlet MapWidth = {levelWidth};");
                 writer.WriteLine($"\t\tlet MapHeight = {levelHeight};");
 
-                writer.WriteLine($"\t\tlet Map = Array.new(MapWidth * MapHeight);");
+                writer.WriteLine($"\t\tlet Map = Array.new({levelWidth * levelHeight});");
 
-                writer.WriteLine("\t\twhile (i < (MapWidth * MapHeight))");
+                writer.WriteLine($"\t\twhile (i < {levelWidth * levelHeight})");
                 writer.WriteLine("\t\t{");
                 writer.WriteLine("\t\t\tlet Map[i] = 0;");
                 writer.WriteLine("\t\t\tlet i = i + 1;");
@@ -668,13 +617,9 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 {
                     if (tempMatrix[i] != 0)
                     {
-                        writer.WriteLine($"\t\tlet Map[{i}] = {tempMatrix[i]};");
+                        writer.WriteLine($"\t\tdo MemoryExt.poke(Map, {i}, {tempMatrix[i]});");
                     }   
                 }
-
-                
-
-
 
                 writer.WriteLine("\t\treturn this;");
                 writer.WriteLine("\t}");
@@ -745,32 +690,32 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine("\t\t}");
                 writer.WriteLine("\t\tlet CollectablesCount = 0;");
 
-                writer.WriteLine("\t\tif (~(PlatformsCount = 0))");
+                writer.WriteLine("\t\tif (PlatformsCount > 0)");
                 writer.WriteLine("\t\t{");
                 writer.WriteLine("\t\t\tdo Platforms.dispose();");
                 writer.WriteLine("\t\t}");
                 writer.WriteLine("\t\tlet Platforms = 0;");
 
-                writer.WriteLine("\t\tif (~(ObstaclesCount = 0))");
+                writer.WriteLine("\t\tif (ObstaclesCount > 0)");
                 writer.WriteLine("\t\t{");
                 writer.WriteLine("\t\t\tdo Obstacles.dispose();");
                 writer.WriteLine("\t\t}");
                 writer.WriteLine("\t\tlet Obstacles = 0;");
 
-                writer.WriteLine("\t\tif (~(EnemiesCount = 0))");
+                writer.WriteLine("\t\tif (EnemiesCount > 0)");
                 writer.WriteLine("\t\t{");
                 writer.WriteLine("\t\t\tdo Enemies.dispose();");
                 writer.WriteLine("\t\t}");
                 writer.WriteLine("\t\tlet Enemies = 0;");
 
-                writer.WriteLine("\t\tif (~(CollectablesCount = 0))");
+                writer.WriteLine("\t\tif (CollectablesCount > 0)");
                 writer.WriteLine("\t\t{");
                 writer.WriteLine("\t\t\tdo Collectables.dispose();");
                 writer.WriteLine("\t\t}");
                 writer.WriteLine("\t\tlet Collectables = 0;");
 
                 writer.WriteLine("\t\tlet i = 0;");
-                writer.WriteLine("\t\twhile (i < (MapWidth * MapHeight))");
+                writer.WriteLine($"\t\twhile (i < {levelWidth * levelHeight})");
                 writer.WriteLine("\t\t{");
                 writer.WriteLine("\t\t\tlet Map[i] = 0;");
                 writer.WriteLine("\t\t\tlet i = i + 1;");
