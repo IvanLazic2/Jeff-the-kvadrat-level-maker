@@ -30,6 +30,7 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
         Obstacle,
         Collectable,
         Finish,
+        SpawnPoint,
         Unknown
     }
 
@@ -93,6 +94,9 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
 
             else if (c.R == 0 && c.G == 128 && c.B == 0) // green
                 result = GameObjectType.Finish;
+
+            else if (c.R == 0 && c.G == 255 && c.B == 255) // cyan 
+                result = GameObjectType.SpawnPoint;
 
             return result;
         }

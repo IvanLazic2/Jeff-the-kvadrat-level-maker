@@ -36,6 +36,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
         List<Obstacle> Obstacles;
         List<Enemy> Enemies;
         List<Collectable> Collectables;
+        List<SpawnPoint> SpawnPoints;
 
         int[,] Matrix;
 
@@ -71,6 +72,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             //Obstacles = new List<Obstacle>();
             Enemies = new List<Enemy>();
             Collectables = new List<Collectable>();
+            SpawnPoints = new List<SpawnPoint>();
 
             Form2 = new Form2(this);
         }
@@ -325,6 +327,12 @@ namespace Jeff_The_Kvadrat_Level_Maker
             pen = Pens.DarkRed;
         }
 
+        private void SpawnPointPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            brush = Brushes.Cyan;
+            pen = Pens.Cyan;
+        }
+
 
 
 
@@ -332,6 +340,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
         {
             Enemies = new List<Enemy>();
             Collectables = new List<Collectable>();
+            SpawnPoints = new List<SpawnPoint>();
 
             for (int j = 0; j < finishedImage.Height - 1; j += 16)
             {
@@ -352,6 +361,9 @@ namespace Jeff_The_Kvadrat_Level_Maker
                             break;
                         case GameObjectType.Finish:
                             Finish = new Finish(i / 16, j / 16);
+                            break;
+                        case GameObjectType.SpawnPoint:
+                            SpawnPoints.Add(new SpawnPoint(i / 16, j));
                             break;
                         default:
                             break;
@@ -511,7 +523,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
                         }
                     }
                 }
-                
+
             }
 
             int numOfCollectableTypes = 3;
@@ -547,11 +559,13 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine("\tfield int ObstaclesCount;");
                 writer.WriteLine("\tfield int EnemiesCount;");
                 writer.WriteLine("\tfield int CollectablesCount;");
+                writer.WriteLine("\tfield int SpawnPointsCount;");
 
                 writer.WriteLine($"\tfield Array Platforms;");
                 writer.WriteLine($"\tfield Array Obstacles;");
                 writer.WriteLine($"\tfield Array Enemies;");
                 writer.WriteLine($"\tfield Array Collectables;");
+                writer.WriteLine("\tfield Array SpawnPoints;");
 
                 writer.WriteLine($"\tfield Array Map;");
 
@@ -567,6 +581,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine($"\t\tlet ObstaclesCount = {Obstacles.Count};");
                 writer.WriteLine($"\t\tlet EnemiesCount = {Enemies.Count};");
                 writer.WriteLine($"\t\tlet CollectablesCount = {Collectables.Count};");
+                writer.WriteLine($"\t\tlet SpawnPointsCount = {SpawnPoints.Count};");
 
                 if (Platforms.Count != 0)
                     writer.WriteLine($"\t\tlet Platforms = Array.new({Platforms.Count});");
@@ -601,6 +616,21 @@ namespace Jeff_The_Kvadrat_Level_Maker
                     writer.WriteLine($"\t\tdo MemoryExt.poke(Collectables, {i}, Collectable.new({Collectables[i].X}, {Collectables[i].Y}, {(int)Collectables[i].Type}));");
                 }
 
+                if (SpawnPoints.Count != 0)
+                    writer.WriteLine($"\t\tlet SpawnPoints = Array.new({SpawnPoints.Count});");
+
+                for (int i = 0; i < SpawnPoints.Count; i++)
+                {
+                    writer.WriteLine($"\t\tdo MemoryExt.poke(SpawnPoints, {i}, SpawnPoint.new({SpawnPoints[i].X}, {SpawnPoints[i].Y}));");
+                }
+
+                if (SpawnPoints.Count != 0)
+                {
+                    writer.WriteLine($"\t\tdo character.setSpawnPointsCount(SpawnPointsCount);");
+                    writer.WriteLine($"\t\tdo character.setSpawnPoints(SpawnPoints);");
+                }
+
+
                 writer.WriteLine($"\t\tlet MapWidth = {levelWidth};");
                 writer.WriteLine($"\t\tlet MapHeight = {levelHeight};");
 
@@ -618,7 +648,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
                     if (tempMatrix[i] != 0)
                     {
                         writer.WriteLine($"\t\tdo MemoryExt.poke(Map, {i}, {tempMatrix[i]});");
-                    }   
+                    }
                 }
 
                 writer.WriteLine("\t\treturn this;");
@@ -645,6 +675,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine("\t\tvar Obstacle obstacle;");
                 writer.WriteLine("\t\tvar Enemy enemy;");
                 writer.WriteLine("\t\tvar Collectable collectable;");
+                writer.WriteLine("\t\tvar SpawnPoint spawnPoint;");
 
                 writer.WriteLine("\t\tdo character.dispose();");
                 writer.WriteLine("\t\tlet character = 0;");
@@ -690,6 +721,16 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine("\t\t}");
                 writer.WriteLine("\t\tlet CollectablesCount = 0;");
 
+                writer.WriteLine("\t\tlet i = 0;");
+                writer.WriteLine("\t\twhile (i < SpawnPointsCount)");
+                writer.WriteLine("\t\t{");
+                writer.WriteLine("\t\t\tlet spawnPoint = SpawnPoints[i];");
+                writer.WriteLine("\t\t\tdo spawnPoint.dispose();");
+                writer.WriteLine("\t\t\tlet spawnPoint = 0;");
+                writer.WriteLine("\t\t\tlet i = i + 1;");
+                writer.WriteLine("\t\t}");
+                writer.WriteLine("\t\tlet SpawnPointsCount = 0;");
+
                 writer.WriteLine("\t\tif (PlatformsCount > 0)");
                 writer.WriteLine("\t\t{");
                 writer.WriteLine("\t\t\tdo Platforms.dispose();");
@@ -714,6 +755,12 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine("\t\t}");
                 writer.WriteLine("\t\tlet Collectables = 0;");
 
+                writer.WriteLine("\t\tif (SpawnPointsCount > 0)");
+                writer.WriteLine("\t\t{");
+                writer.WriteLine("\t\t\tdo SpawnPoints.dispose();");
+                writer.WriteLine("\t\t}");
+                writer.WriteLine("\t\tlet SpawnPoints = 0;");
+
                 writer.WriteLine("\t\tlet i = 0;");
                 writer.WriteLine($"\t\twhile (i < {levelWidth * levelHeight})");
                 writer.WriteLine("\t\t{");
@@ -730,7 +777,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine("\t\treturn;");
                 writer.WriteLine("\t}");
 
-                
+
 
                 writer.WriteLine("}");
             }
@@ -744,6 +791,6 @@ namespace Jeff_The_Kvadrat_Level_Maker
             Form2.ShowDialog();
         }
 
-        
+
     }
 }
