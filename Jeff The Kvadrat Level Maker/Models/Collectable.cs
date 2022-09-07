@@ -41,5 +41,55 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
 
             return result;
         }
+
+        public static Pen GetPenByType(CollectableType type)
+        {
+            Pen pen = Pens.White;
+
+            switch (type)
+            {
+                case CollectableType.Coin:
+                    pen = Pens.Gold;
+                    break;
+                case CollectableType.Life:
+                    pen = Pens.DeepPink;
+                    break;
+                case CollectableType.Ammo:
+                    pen = Pens.Purple;
+                    break;
+                case CollectableType.Unknown:
+                    pen = Pens.White;
+                    break;
+                default:
+                    break;
+            }
+
+            return pen;
+        }
+
+        public static Brush GetBrushByType(CollectableType type)
+        {
+            Brush brush = Brushes.White;
+
+            switch (type)
+            {
+                case CollectableType.Coin:
+                    brush = Brushes.Gold;
+                    break;
+                case CollectableType.Life:
+                    brush = Brushes.DeepPink;
+                    break;
+                case CollectableType.Ammo:
+                    brush = Brushes.Purple;
+                    break;
+                case CollectableType.Unknown:
+                    brush = Brushes.White;
+                    break;
+                default:
+                    break;
+            }
+
+            return brush;
+        }
     }
 }

@@ -121,9 +121,6 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
         }
 
 
-
-
-
         public static ObstacleType GetObstacleTypeByColor(Color c)
         {
             ObstacleType result = ObstacleType.Unknown;
@@ -140,6 +137,68 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
                 result = ObstacleType.SpikedArea;
 
             return result;
+        }
+
+        public static Pen GetPenByType(ObstacleType type)
+        {
+            Pen pen = Pens.White;
+
+            switch (type)
+            {
+                case ObstacleType.SmallSpikes:
+                    pen = Pens.Yellow;
+                    break;
+                case ObstacleType.MediumSpikes:
+                    pen = Pens.Orange;
+                    break;
+                case ObstacleType.WeirdSpikes:
+                    pen = Pens.Chocolate;
+                    break;
+                case ObstacleType.LargeSpikes:
+                    pen = Pens.SaddleBrown;
+                    break;
+                case ObstacleType.SpikedArea:
+                    pen = Pens.Tan;
+                    break;
+                case ObstacleType.Unknown:
+                    pen = Pens.White;
+                    break;
+                default:
+                    break;
+            }
+
+            return pen;
+        }
+
+        public static Brush GetBrushByType(ObstacleType type)
+        {
+            Brush brush = Brushes.White;
+
+            switch (type)
+            {
+                case ObstacleType.SmallSpikes:
+                    brush = Brushes.Yellow;
+                    break;
+                case ObstacleType.MediumSpikes:
+                    brush = Brushes.Orange;
+                    break;
+                case ObstacleType.WeirdSpikes:
+                    brush = Brushes.Chocolate;
+                    break;
+                case ObstacleType.LargeSpikes:
+                    brush = Brushes.SaddleBrown;
+                    break;
+                case ObstacleType.SpikedArea:
+                    brush = Brushes.Tan;
+                    break;
+                case ObstacleType.Unknown:
+                    brush = Brushes.White;
+                    break;
+                default:
+                    break;
+            }
+
+            return brush;
         }
     }
 }

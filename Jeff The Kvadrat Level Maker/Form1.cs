@@ -8,6 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -75,6 +76,10 @@ namespace Jeff_The_Kvadrat_Level_Maker
             SpawnPoints = new List<SpawnPoint>();
 
             Form2 = new Form2(this);
+
+            openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.InitialDirectory = @"D:\User\Fakse\Moderni racunalni sustavi\Projekt\Jeff the kvadrat";
+            openFileDialog1.Filter = "level files (Level*.jack) | Level*.jack";
         }
 
         private void clear()
@@ -134,6 +139,26 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 }
             }
 
+        }
+
+        private void draw(int x, int y, Pen pen, Brush brush)
+        {
+            if (pictureBox1.Image == null)
+            {
+                bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+                pictureBox1.Image = bmp;
+            }
+
+            using (Graphics g = Graphics.FromImage(pictureBox1.Image))
+            {
+                drawingRectangle.X = 16 * (x) + 1;
+                drawingRectangle.Y = 16 * (y / 16) + 1;
+                drawingRectangle.Width = 15 - 1;
+                drawingRectangle.Height = 15 - 1;
+
+                g.FillRectangle(brush, drawingRectangle);
+                g.DrawRectangle(pen, drawingRectangle);
+            }
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -791,6 +816,114 @@ namespace Jeff_The_Kvadrat_Level_Maker
             Form2.ShowDialog();
         }
 
+        private void button3_MouseClick(object sender, MouseEventArgs e)
+        {
+            openFileDialog1.ShowDialog();
+            var filePath = openFileDialog1.FileName;
 
+            if (filePath == "")
+                return;
+
+            Regex characterRx = new Regex(@"let character = Character.new\((\d+), (\d+), false\);", RegexOptions.Compiled | RegexOptions.Multiline);
+
+            Regex finishRx = new Regex(@"let finish = Finish.new\((\d+), (\d+)\);", RegexOptions.Compiled | RegexOptions.Multiline);
+
+            Regex platformRx = new Regex(@"do MemoryExt.poke\(Platforms, \d+, Platform.new\((\d+), (\d+), (\d+), (\d+)\)\);", RegexOptions.Compiled | RegexOptions.Multiline);
+
+            Regex obstacleRx = new Regex(@"do MemoryExt.poke\(Obstacles, \d+, Obstacle.new\((\d+), (\d+), (\d+), (\d+), (\d+)\)\);", RegexOptions.Compiled | RegexOptions.Multiline);
+
+            Regex enemyRx = new Regex(@"do MemoryExt.poke\(Enemies, \d+, Enemy.new\((\d+), (\d+), (\d+)\)\)", RegexOptions.Compiled | RegexOptions.Multiline);
+
+            Regex collectableRx = new Regex(@"do MemoryExt.poke\(Collectables, \d+, Collectable.new\((\d+), (\d+), (\d+)\)\)", RegexOptions.Compiled | RegexOptions.Multiline);
+
+            Regex spawnPointRx = new Regex(@"do MemoryExt.poke\(SpawnPoints, \d+, SpawnPoint.new\((\d+), (\d+)\)\)", RegexOptions.Compiled | RegexOptions.Multiline);
+
+            clear();
+            makeGrid();
+
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                Match match = null;
+                MatchCollection matches = null;
+                GroupCollection groups = null;
+
+                string text = reader.ReadToEnd();
+
+                // CHARACTER
+                match = characterRx.Match(text);
+                groups = match.Groups;
+                draw(int.Parse(groups[1].Value), int.Parse(groups[2].Value) + 24, Pens.Blue, Brushes.Blue);
+
+                // FINISH
+                match = finishRx.Match(text);
+                groups = match.Groups;
+                draw(int.Parse(groups[1].Value), int.Parse(groups[2].Value), Pens.Green, Brushes.Green);
+
+                // PLATFORMS
+                matches = platformRx.Matches(text);
+                foreach (Match m in matches)
+                {
+                    groups = m.Groups;
+
+                    for (int i = 0; i < int.Parse(groups[4].Value); i++)
+                    {
+                        draw(int.Parse(groups[1].Value) + i, 
+                            int.Parse(groups[2].Value), 
+                            Platform.GetPenByType((PlatformType)int.Parse(groups[3].Value)), 
+                            Platform.GetBrushByType((PlatformType)int.Parse(groups[3].Value)));
+                    }
+                }
+
+                // OBSTACLES
+                matches = obstacleRx.Matches(text);
+                foreach (Match m in matches)
+                {
+                    groups = m.Groups;
+
+                    for (int i = 0; i < int.Parse(groups[5].Value); i++)
+                    {
+                        draw(int.Parse(groups[1].Value) + i, 
+                            int.Parse(groups[2].Value), 
+                            Obstacle.GetPenByType((ObstacleType)int.Parse(groups[3].Value)), 
+                            Obstacle.GetBrushByType((ObstacleType)int.Parse(groups[3].Value)));
+                    }
+                }
+
+                // ENEMIES
+                matches = enemyRx.Matches(text);
+                foreach (Match m in matches)
+                {
+                    groups = m.Groups;
+
+                    draw(int.Parse(groups[1].Value), 
+                        int.Parse(groups[2].Value), 
+                        Enemy.GetPenByType((EnemyType)int.Parse(groups[3].Value)), 
+                        Enemy.GetBrushByType((EnemyType)int.Parse(groups[3].Value)));
+                }
+
+                // COLLECTABLES
+                matches = collectableRx.Matches(text);
+                foreach (Match m in matches)
+                {
+                    groups = m.Groups;
+
+                    draw(int.Parse(groups[1].Value), 
+                        int.Parse(groups[2].Value), 
+                        Collectable.GetPenByType((CollectableType)int.Parse(groups[3].Value)), 
+                        Collectable.GetBrushByType((CollectableType)int.Parse(groups[3].Value)));
+                }
+
+                // SPAWN POINTS
+                matches = spawnPointRx.Matches(text);
+                foreach (Match m in matches)
+                {
+                    groups = m.Groups;
+
+                    draw(int.Parse(groups[1].Value), int.Parse(groups[2].Value), Pens.Cyan, Brushes.Cyan);
+                }
+            }
+
+            fileNameTextBox.Text = Path.GetFileNameWithoutExtension(filePath);
+        }
     }
 }

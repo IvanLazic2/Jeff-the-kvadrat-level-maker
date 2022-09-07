@@ -52,5 +52,67 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
 
             return result;
         }
+
+        public static Pen GetPenByType(EnemyType type)
+        {
+            Pen pen = Pens.White;
+
+            switch (type)
+            {
+                case EnemyType.Spider:
+                    pen = Pens.Red;
+                    break;
+                case EnemyType.EvilJeffMelee:
+                    pen = Pens.IndianRed;
+                    break;
+                case EnemyType.EvilJeffRanged:
+                    pen = Pens.Maroon;
+                    break;
+                case EnemyType.Bat:
+                    pen = Pens.Salmon;
+                    break;
+                case EnemyType.Shooter:
+                    pen = Pens.DarkRed;
+                    break;
+                case EnemyType.Unknown:
+                    pen = Pens.White;
+                    break;
+                default:
+                    break;
+            }
+
+            return pen;
+        }
+
+        public static Brush GetBrushByType(EnemyType type)
+        {
+            Brush brush = Brushes.White;
+
+            switch (type)
+            {
+                case EnemyType.Spider:
+                    brush = Brushes.Red;
+                    break;
+                case EnemyType.EvilJeffMelee:
+                    brush = Brushes.IndianRed;
+                    break;
+                case EnemyType.EvilJeffRanged:
+                    brush = Brushes.Maroon;
+                    break;
+                case EnemyType.Bat:
+                    brush = Brushes.Salmon;
+                    break;
+                case EnemyType.Shooter:
+                    brush = Brushes.DarkRed;
+                    break;
+                case EnemyType.Unknown:
+                    brush = Brushes.White;
+                    break;
+                default:
+                    break;
+            }
+
+            return brush;
+        }
     }
 }

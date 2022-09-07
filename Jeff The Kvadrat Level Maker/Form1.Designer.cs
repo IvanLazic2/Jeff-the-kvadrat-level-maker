@@ -38,6 +38,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.SpiderPanel = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label27 = new System.Windows.Forms.Label();
+            this.SpawnPointPanel = new System.Windows.Forms.Panel();
             this.label26 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.ShooterPanel = new System.Windows.Forms.Panel();
@@ -87,8 +89,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.label4 = new System.Windows.Forms.Label();
             this.fileNameTextBox = new System.Windows.Forms.TextBox();
             this.spriteEditorButton = new System.Windows.Forms.Button();
-            this.label27 = new System.Windows.Forms.Label();
-            this.SpawnPointPanel = new System.Windows.Forms.Panel();
+            this.button3 = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -108,7 +110,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 410);
+            this.button1.Location = new System.Drawing.Point(12, 414);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -228,6 +230,24 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(260, 399);
             this.panel1.TabIndex = 8;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(142, 318);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(66, 13);
+            this.label27.TabIndex = 37;
+            this.label27.Text = "Spawn point";
+            // 
+            // SpawnPointPanel
+            // 
+            this.SpawnPointPanel.BackColor = System.Drawing.Color.Cyan;
+            this.SpawnPointPanel.Location = new System.Drawing.Point(119, 317);
+            this.SpawnPointPanel.Name = "SpawnPointPanel";
+            this.SpawnPointPanel.Size = new System.Drawing.Size(16, 16);
+            this.SpawnPointPanel.TabIndex = 38;
+            this.SpawnPointPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SpawnPointPanel_MouseClick);
             // 
             // label26
             // 
@@ -670,29 +690,26 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.spriteEditorButton.UseVisualStyleBackColor = true;
             this.spriteEditorButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.spriteEditorButton_MouseClick);
             // 
-            // label27
+            // button3
             // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(142, 318);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(66, 13);
-            this.label27.TabIndex = 37;
-            this.label27.Text = "Spawn point";
+            this.button3.Location = new System.Drawing.Point(435, 297);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 15;
+            this.button3.Text = "Load";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button3_MouseClick);
             // 
-            // SpawnPointPanel
+            // openFileDialog1
             // 
-            this.SpawnPointPanel.BackColor = System.Drawing.Color.Cyan;
-            this.SpawnPointPanel.Location = new System.Drawing.Point(119, 317);
-            this.SpawnPointPanel.Name = "SpawnPointPanel";
-            this.SpawnPointPanel.Size = new System.Drawing.Size(16, 16);
-            this.SpawnPointPanel.TabIndex = 38;
-            this.SpawnPointPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SpawnPointPanel_MouseClick);
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.spriteEditorButton);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.fileNameTextBox);
@@ -773,6 +790,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
         private System.Windows.Forms.Panel ShooterPanel;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Panel SpawnPointPanel;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 

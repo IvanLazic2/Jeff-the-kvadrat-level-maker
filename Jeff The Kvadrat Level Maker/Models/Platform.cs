@@ -135,6 +135,96 @@ namespace Jeff_The_Kvadrat_Level_Maker.Models
             return result;
         }
 
+        public static Pen GetPenByType(PlatformType type)
+        {
+            Pen pen = Pens.White;
 
+            switch (type)
+            {
+                case PlatformType.SimpleGroundPlatform:
+                    pen = Pens.Black;
+                    break;
+                case PlatformType.SimplePlatform:
+                    pen = Pens.DimGray;
+                    break;
+                case PlatformType.StonePlatform:
+                    pen = Pens.DarkGray;
+                    break;
+                case PlatformType.Brick1Platform:
+                    pen = Pens.LightGray;
+                    break;
+                case PlatformType.Brick2Platform:
+                    pen = Pens.RosyBrown;
+                    break;
+                case PlatformType.RoboticPlatform:
+                    pen = Pens.SlateGray;
+                    break;
+                case PlatformType.SmallStonePlatform:
+                    pen = Pens.DarkOliveGreen;
+                    break;
+                case PlatformType.SmallBrick1Platform:
+                    pen = Pens.MediumAquamarine;
+                    break;
+                case PlatformType.SmallBrick2Platform:
+                    pen = Pens.Brown;
+                    break;
+                case PlatformType.SmallRoboticPlatform:
+                    pen = Pens.DarkSlateGray;
+                    break;
+                case PlatformType.Unknown:
+                    pen = Pens.White;
+                    break;
+                default:
+                    break;
+            }
+
+            return pen;
+        }
+
+        public static Brush GetBrushByType(PlatformType type)
+        {
+            Brush brush = Brushes.White;
+
+            switch (type)
+            {
+                case PlatformType.SimpleGroundPlatform:
+                    brush = Brushes.Black;
+                    break;
+                case PlatformType.SimplePlatform:
+                    brush = Brushes.DimGray;
+                    break;
+                case PlatformType.StonePlatform:
+                    brush = Brushes.DarkGray;
+                    break;
+                case PlatformType.Brick1Platform:
+                    brush = Brushes.LightGray;
+                    break;
+                case PlatformType.Brick2Platform:
+                    brush = Brushes.RosyBrown;
+                    break;
+                case PlatformType.RoboticPlatform:
+                    brush = Brushes.SlateGray;
+                    break;
+                case PlatformType.SmallStonePlatform:
+                    brush = Brushes.DarkOliveGreen;
+                    break;
+                case PlatformType.SmallBrick1Platform:
+                    brush = Brushes.MediumAquamarine;
+                    break;
+                case PlatformType.SmallBrick2Platform:
+                    brush = Brushes.Brown;
+                    break;
+                case PlatformType.SmallRoboticPlatform:
+                    brush = Brushes.DarkSlateGray;
+                    break;
+                case PlatformType.Unknown:
+                    brush = Brushes.White;
+                    break;
+                default:
+                    break;
+            }
+
+            return brush;
+        }
     }
 }
