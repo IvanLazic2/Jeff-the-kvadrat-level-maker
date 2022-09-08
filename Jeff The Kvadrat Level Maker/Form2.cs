@@ -593,9 +593,9 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 }
                 else
                 {
-                    writer.WriteLine("\tfunction void DrawFrame(int memAddress, bool display, int x, int y)");
+                    writer.WriteLine("\tfunction void DrawFrame(int memAddress, int x, int y)");
                     writer.WriteLine("\t{");
-                    writer.WriteLine("\t\tdo Sprite.Draw(memAddress, Frames[currFrame], FrameSize, Width, Height, display, x, y);");
+                    writer.WriteLine("\t\tdo Sprite.Draw(memAddress, Frames[currFrame], FrameSize, Width, Height, x, y);");
                     writer.WriteLine("\t\treturn;");
                     writer.WriteLine("\t}");
                 }
