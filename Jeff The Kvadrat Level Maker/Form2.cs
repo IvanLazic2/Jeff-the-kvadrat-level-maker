@@ -578,15 +578,15 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
                 if (hasMirroredCheckBox.Checked)
                 {
-                    writer.WriteLine("\tfunction void DrawFrame(int memAddress, bool display, bool mirrored, int x, int y)");
+                    writer.WriteLine("\tfunction void DrawFrame(int memAddress, bool mirrored, int x, int y)");
                     writer.WriteLine("\t{");
                     writer.WriteLine("\t\tif (mirrored)");
                     writer.WriteLine("\t\t{");
-                    writer.WriteLine("\t\t\tdo Sprite.Draw(memAddress, FramesMirrored[currFrame], FrameSize, Width, Height, display, x, y);");
+                    writer.WriteLine("\t\t\tdo Sprite.Draw(memAddress, FramesMirrored[currFrame], FrameSize, Width, Height, x, y);");
                     writer.WriteLine("\t\t}");
                     writer.WriteLine("\t\telse");
                     writer.WriteLine("\t\t{");
-                    writer.WriteLine("\t\t\tdo Sprite.Draw(memAddress, Frames[currFrame], FrameSize, Width, Height, display, x, y);");
+                    writer.WriteLine("\t\t\tdo Sprite.Draw(memAddress, Frames[currFrame], FrameSize, Width, Height, x, y);");
                     writer.WriteLine("\t\t}");
                     writer.WriteLine("\t\treturn;");
                     writer.WriteLine("\t}");
