@@ -21,6 +21,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
         int gameScreenWidth;
         int sectionWidth;
 
+        string directory;
+
         Bitmap bmp;
         Pen pen;
         Pen gridPen = Pens.Gray;
@@ -77,8 +79,10 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
             Form2 = new Form2(this);
 
+            directory = @"D:\User\Fakse\Moderni racunalni sustavi\Projekt\Jeff the kvadrat";
+
             openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.InitialDirectory = @"D:\User\Fakse\Moderni racunalni sustavi\Projekt\Jeff the kvadrat";
+            openFileDialog1.InitialDirectory = directory;
             openFileDialog1.Filter = "level files (Level*.jack) | Level*.jack";
         }
 
@@ -393,11 +397,6 @@ namespace Jeff_The_Kvadrat_Level_Maker
                         default:
                             break;
                     }
-
-                    /*if (GameObject.GetGameObjectType(c) == GameObjectType.Character)
-                    {
-                        Character = new Character(i / 16, j);
-                    }*/
                 }
             }
         }
@@ -415,21 +414,17 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
             generateMapMatrix();
 
-            //generateSections();
             writeToFile();
         }
 
         private void generateSections()
         {
-            //int sectionsNum = levelWidth / Platform1s.Count / 2;
             Sections = new List<Section>();
 
             Platforms.Sort((p1, p2) => p1.Y.CompareTo(p2.Y)); //X
             Obstacles.Sort((o1, o2) => o2.Y.CompareTo(o2.Y));
 
-            //List<Platform1> current = new List<Platform1>();
             Section currentSection = new Section();
-            //List<Platform1> next = new List<Platform1>();
 
             int screensNum = levelWidth / sectionWidth;
 
@@ -453,16 +448,9 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
                 currentSection.LeftBorder = (k - 1) * sectionWidth;
                 currentSection.RightBorder = k * sectionWidth;
-                //currentSection.PlatformsNum = currentSection.Platforms1.Count;
                 Sections.Add(currentSection);
                 currentSection = new Section();
             }
-
-            /*foreach (var obstacle in Obstacles)
-            {
-                int index = obstacle.X / sectionWidth;
-                Sections[index].Obstacles.Add(obstacle);
-            }*/
 
             // borders
             for (int i = 0; i < Sections.Count; i++)
@@ -512,8 +500,6 @@ namespace Jeff_The_Kvadrat_Level_Maker
 
                     Sections[i].Obstacles = new HashSet<Obstacle>(Sections[i].Obstacles).ToList();
                 }
-
-                //Sections[i].PlatformsNum = Sections[i].Platforms1.Count;
             }
 
 
@@ -566,9 +552,9 @@ namespace Jeff_The_Kvadrat_Level_Maker
         private void writeToFile()
         {
             string levelName = fileNameTextBox.Text;
-            string folder = @"D:\User\Fakse\Moderni racunalni sustavi\Projekt\Jeff the kvadrat\";
+            string folder = directory;
             string fileName = levelName + ".jack";
-            string fullPath = folder + fileName;
+            string fullPath = folder + "\\" + fileName;
 
             using (StreamWriter writer = new StreamWriter(fullPath))
             {
@@ -924,6 +910,15 @@ namespace Jeff_The_Kvadrat_Level_Maker
             }
 
             fileNameTextBox.Text = Path.GetFileNameWithoutExtension(filePath);
+        }
+
+        private void chooseFolderButton_MouseClick(object sender, MouseEventArgs e)
+        {
+			if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+			{
+				directory = folderBrowserDialog1.SelectedPath;
+				openFileDialog1.InitialDirectory = directory;
+			}
         }
     }
 }

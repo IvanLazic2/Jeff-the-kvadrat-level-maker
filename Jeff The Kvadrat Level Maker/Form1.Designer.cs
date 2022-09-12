@@ -91,6 +91,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.spriteEditorButton = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.chooseFolderButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -682,7 +684,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // 
             // spriteEditorButton
             // 
-            this.spriteEditorButton.Location = new System.Drawing.Point(435, 415);
+            this.spriteEditorButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.spriteEditorButton.Location = new System.Drawing.Point(233, 414);
             this.spriteEditorButton.Name = "spriteEditorButton";
             this.spriteEditorButton.Size = new System.Drawing.Size(75, 23);
             this.spriteEditorButton.TabIndex = 14;
@@ -704,11 +707,23 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // chooseFolderButton
+            // 
+            this.chooseFolderButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.chooseFolderButton.Location = new System.Drawing.Point(437, 414);
+            this.chooseFolderButton.Name = "chooseFolderButton";
+            this.chooseFolderButton.Size = new System.Drawing.Size(91, 23);
+            this.chooseFolderButton.TabIndex = 17;
+            this.chooseFolderButton.Text = "Choose folder";
+            this.chooseFolderButton.UseVisualStyleBackColor = true;
+            this.chooseFolderButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.chooseFolderButton_MouseClick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.chooseFolderButton);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.spriteEditorButton);
             this.Controls.Add(this.label4);
@@ -792,6 +807,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
         private System.Windows.Forms.Panel SpawnPointPanel;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.Button chooseFolderButton;
     }
 }
 

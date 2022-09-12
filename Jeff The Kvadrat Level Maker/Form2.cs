@@ -16,6 +16,8 @@ namespace Jeff_The_Kvadrat_Level_Maker
     {
         public Form1 Form1 { get; set; }
 
+        string directory = @"D:\User\Fakse\Moderni racunalni sustavi\Projekt\Jeff the kvadrat\";
+
         List<Frame> Frames = new List<Frame>();
 
         Bitmap bmp;
@@ -163,49 +165,10 @@ namespace Jeff_The_Kvadrat_Level_Maker
             }
         }
 
-
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
             isMouseDown = false;
         }
-
-        /*private Sprite generateSpriteFromImage2(Bitmap finishedImage)
-        {
-            //int[,] sprite = new int[(finishedImage.Width - 1) / 256, (finishedImage.Height - 1) / 256];
-
-            Sprite sprite = new Sprite((finishedImage.Width - 1) / 256, (finishedImage.Height - 1) / 256);
-
-            //for (int i = 0; i < finishedImage.Width - 1; i += 256)
-            for (int i = finishedImage.Height - 257; i >= 0; i -= 256)
-            {
-
-                List<int[,]> spriteRow = new List<int[,]>();
-
-                //for (int j = finishedImage.Height - 257; j >= 0; j -= 256)
-                for (int j = 0; j < finishedImage.Width - 1; j += 256)
-                {
-                    SpritePart spritePart = new SpritePart();
-
-                    for (int k = 0; k < 256; k += 16)
-                    {
-                        for (int l = 0; l < 256; l += 16)
-                        {
-                            Color c = finishedImage.GetPixel(j + k + 1, i + l + 1);
-
-                            if (c.R == 0 && c.G == 0 && c.B == 0)
-                            {
-                                spritePart.Array[l / 16, k / 16] = 1;
-                            }
-                        }
-                    }
-
-                    spritePart.ConvertArray();
-                    sprite.Array[((finishedImage.Height - 1) / 256) - (i / 256) - 1, j / 256] = spritePart;
-                }
-            }
-
-            return sprite;
-        }*/
 
         private int blockRowToInt(int[] blockRow)
         {
@@ -393,9 +356,9 @@ namespace Jeff_The_Kvadrat_Level_Maker
         private void writeToFile()
         {
             string spriteName = spriteNameTextBox.Text;
-            string folder = @"D:\User\Fakse\Moderni racunalni sustavi\Projekt\Jeff the kvadrat\";
+            string folder = directory;
             string fileName = spriteName + ".jack";
-            string fullPath = folder + fileName;
+            string fullPath = folder + "//" + fileName;
 
             using (StreamWriter writer = new StreamWriter(fullPath))
             {
@@ -406,25 +369,10 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine("\tstatic int Height;");
 
                 writer.WriteLine("\tstatic int AnimationFramesCount;");
-                //writer.WriteLine("\tstatic int SpecialFramesCount;");
-                //writer.WriteLine("\tstatic int TotalFramesCount;");
-
-                //writer.WriteLine("\tstatic bool stopAnimation;");
 
                 writer.WriteLine("\tstatic int currFrame;");
                 writer.WriteLine("\tstatic int animationTimer;");
                 writer.WriteLine("\tstatic int animationDelay;");
-                //writer.WriteLine("\tstatic int specialFrameTimer;");
-
-                /*for (int i = numberOfAnimationFrames; i < Frames.Count; i++)
-                {
-                    writer.WriteLine($"\tstatic int {Frames[i].Name}Duration;");
-                }*/
-
-                /*for (int i = numberOfAnimationFrames; i < Frames.Count; i++)
-                {
-                    writer.WriteLine($"\tstatic int {Frames[i].Name}Index;");
-                }*/
 
                 writer.WriteLine("\tstatic Array Frames;");
                 writer.WriteLine("\tstatic int FrameSize;");
@@ -453,11 +401,6 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 if (Frames.Count > 1)
                     writer.WriteLine($"\t\tlet animationDelay = 3;");
 
-                /*for (int i = numberOfAnimationFrames; i < Frames.Count; i++)
-                {
-                    writer.WriteLine($"\t\tlet {Frames[i].Name}Duration = 10;");
-                }*/
-
                 writer.WriteLine("//////////////////////////////////////////");
 
                 var width = (int)numericUpDown1.Value / 16;
@@ -467,8 +410,6 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 writer.WriteLine($"\t\tlet Height = {height};");
 
                 writer.WriteLine($"\t\tlet AnimationFramesCount = {numberOfAnimationFrames};");
-                //writer.WriteLine($"\t\tlet SpecialFramesCount = {Frames.Count - numberOfAnimationFrames};");
-                //writer.WriteLine($"\t\tlet TotalFramesCount = {Frames.Count};");
 
                 writer.WriteLine($"\t\tlet FrameSize = {width * height * 16};");
                 writer.WriteLine($"\t\tlet Frames = Array.new(AnimationFramesCount);");
@@ -547,18 +488,14 @@ namespace Jeff_The_Kvadrat_Level_Maker
                     writer.WriteLine($"\t\t\tdo {spriteName}.ChangeFrame();");
                     writer.WriteLine("\t\t\tlet animationTimer = animationDelay;");
                     writer.WriteLine("\t\t}");
-                    /*writer.WriteLine("\t\tif (specialFrameTimer < 1)");
-                    writer.WriteLine("\t\t{");
-                    writer.WriteLine("\t\t\tlet stopAnimation = false;");
-                    writer.WriteLine("\t\t\tlet specialFrameTimer = 0;");
-                    writer.WriteLine("\t\t}");*/
+
                     writer.WriteLine("\t\treturn;");
                     writer.WriteLine("\t}");
 
                     writer.WriteLine("\tfunction void DecrementTimers()");
                     writer.WriteLine("\t{");
                     writer.WriteLine("\t\tlet animationTimer = animationTimer - 1;");
-                    //writer.WriteLine("\t\tlet specialFrameTimer = specialFrameTimer - 1;");
+
                     writer.WriteLine("\t\treturn;");
                     writer.WriteLine("\t}");
 
@@ -601,6 +538,14 @@ namespace Jeff_The_Kvadrat_Level_Maker
                 }
 
                 writer.WriteLine("}");
+            }
+        }
+
+        private void chooseFolderButton_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                directory = folderBrowserDialog1.SelectedPath;
             }
         }
     }

@@ -42,6 +42,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.frameNameTextBox = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.chooseFolderButton = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
@@ -51,6 +52,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.deleteButton = new System.Windows.Forms.Button();
             this.mirrorButton = new System.Windows.Forms.Button();
             this.hasMirroredCheckBox = new System.Windows.Forms.CheckBox();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
@@ -175,6 +177,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.chooseFolderButton);
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.numericUpDown3);
             this.panel2.Controls.Add(this.label4);
@@ -189,6 +192,17 @@ namespace Jeff_The_Kvadrat_Level_Maker
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(222, 642);
             this.panel2.TabIndex = 10;
+            // 
+            // chooseFolderButton
+            // 
+            this.chooseFolderButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.chooseFolderButton.Location = new System.Drawing.Point(3, 535);
+            this.chooseFolderButton.Name = "chooseFolderButton";
+            this.chooseFolderButton.Size = new System.Drawing.Size(100, 23);
+            this.chooseFolderButton.TabIndex = 13;
+            this.chooseFolderButton.Text = "Choose folder";
+            this.chooseFolderButton.UseVisualStyleBackColor = true;
+            this.chooseFolderButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.chooseFolderButton_MouseClick);
             // 
             // label5
             // 
@@ -329,5 +343,7 @@ namespace Jeff_The_Kvadrat_Level_Maker
         private System.Windows.Forms.NumericUpDown numericUpDown3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox hasMirroredCheckBox;
+        private System.Windows.Forms.Button chooseFolderButton;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
     }
 }
